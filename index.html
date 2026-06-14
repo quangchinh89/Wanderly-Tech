@@ -759,14 +759,12 @@ footer {
     </div>
     <h2 class="fade-up">Three dots. <em>Infinite connections.</em></h2>
     <p class="fade-up">Wanderly is coming soon. Be first to find your travel tribe when we launch — and help shape the app before anyone else gets to.</p>
-    <form class="cta-form fade-up" id="waitlistForm"
-      action="https://docs.google.com/forms/d/e/1FAIpQLSdqCXDeWxv6Ds_8-0YaXXaTuVLkdH_qsAxJyne1o3i9d7pC3Q/formResponse"
-      method="POST" target="hidden_iframe" onsubmit="handleSubmit()">
-      <input type="email" name="entry.8" class="cta-input" placeholder="Your email address" required>
+        <form class="cta-form fade-up" id="waitlistForm" action="https://formspree.io/f/xojzydwk" method="POST">
+      <input type="email" name="email" class="cta-input" placeholder="Your email address" required>
       <button type="submit" class="btn-white" id="joinBtn">Join the waitlist</button>
     </form>
-    <iframe name="hidden_iframe" style="display:none"></iframe>
     <p class="cta-note" id="cta-note">Free during beta &nbsp;·&nbsp; No spam &nbsp;·&nbsp; Unsubscribe anytime</p>
+    <p id="cta-success" style="display:none;color:#fff;font-size:15px;font-weight:600;margin-top:16px;">✓ You're on the list! We'll be in touch soon.</p>
   </div>
 </section>
 
@@ -795,15 +793,28 @@ footer {
     if (p) p.querySelectorAll('.fade-up').forEach((c,i) => c.style.transitionDelay = `${i*0.09}s`);
   });
 
-  document.getElementById('joinBtn').addEventListener('click', function() {
-    const inp = document.querySelector('.cta-input');
-    if (inp.value && inp.value.includes('@')) {
-      this.textContent = '✓ You\'re on the list!';
-      this.style.background = '#22C55E'; this.style.color = '#fff';
-      inp.disabled = true;
-    } else {
-      inp.style.boxShadow = '0 0 0 3px rgba(255,255,255,0.6)'; inp.focus();
-      setTimeout(() => inp.style.boxShadow = '', 1500);
+  document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('joinBtn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    try {
+      const res = await fetch(this.action, {
+        method: 'POST',
+        body: new FormData(this),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        this.style.display = 'none';
+        document.getElementById('cta-note').style.display = 'none';
+        document.getElementById('cta-success').style.display = 'block';
+      } else {
+        btn.textContent = 'Try again';
+        btn.disabled = false;
+      }
+    } catch(err) {
+      btn.textContent = 'Try again';
+      btn.disabled = false;
     }
   });
 </script>
