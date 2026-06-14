@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Wanderly logo">
+  <!-- Logo C — three-dot tribe mark in brand colors, equilateral triangle, clean 16px gaps -->
+  <circle cx="178" cy="205" r="70" fill="#E8604C"/>
+  <circle cx="334" cy="205" r="70" fill="#0FB5BA"/>
+  <circle cx="256" cy="340" r="70" fill="#FFB547"/>
+</svg>
