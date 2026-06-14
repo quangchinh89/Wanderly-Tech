@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wanderly — Find Your Travel Tribe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cream: #FAF7F2;
+  --coral: #E8604C;
+  --coral-dark: #c94433;
+  --teal: #0FB5BA;
+  --gold: #FFB547;
+  --ink: #1F1B16;
+  --ink-70: rgba(31,27,22,0.7);
+  --ink-40: rgba(31,27,22,0.4);
+  --ink-10: rgba(31,27,22,0.08);
+  --card: #F0EBE3;
+  --white: #ffffff;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 18px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(250,247,242,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--ink-10);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.logo-mark { width: 34px; height: 34px; }
+.logo-word { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--ink); }
+.nav-links { display: flex; align-items: center; gap: 36px; }
+.nav-links a { font-size: 14px; font-weight: 500; color: var(--ink-70); text-decoration: none; transition: color .2s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-pill {
+  background: var(--coral); color: #fff;
+  padding: 9px 22px; border-radius: 100px;
+  font-size: 14px; font-weight: 600; text-decoration: none;
+  transition: box-shadow .2s, transform .2s;
+}
+.nav-pill:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(232,96,76,.32); }
+
+/* HERO */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: 120px 48px 80px; position: relative; overflow: hidden;
+}
+.hero-orbs { position: absolute; inset: 0; pointer-events: none; }
+.orb {
+  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15;
+}
+.orb-1 { width: 500px; height: 500px; background: var(--teal); right: -100px; top: -100px; }
+.orb-2 { width: 400px; height: 400px; background: var(--coral); right: 200px; bottom: -50px; }
+.orb-3 { width: 300px; height: 300px; background: var(--gold); right: 50px; top: 200px; }
+.hero-wrap {
+  max-width: 1200px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  position: relative; z-index: 1;
+}
+
+/* BETA BADGE */
+.beta-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--card); border-radius: 100px;
+  padding: 6px 16px 6px 8px; margin-bottom: 28px;
+  font-size: 12px; font-weight: 600; color: var(--ink-70);
+  letter-spacing: .04em; text-transform: uppercase;
+}
+.beta-dot-group { display: flex; gap: 4px; align-items: center; }
+.beta-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  animation: dot-pulse 2s ease-in-out infinite;
+}
+.bd-1 { background: var(--coral); animation-delay: 0s; }
+.bd-2 { background: var(--teal); animation-delay: .3s; }
+.bd-3 { background: var(--gold); animation-delay: .6s; }
+@keyframes dot-pulse {
+  0%,100% { transform: scale(1); opacity: .7; }
+  50% { transform: scale(1.25); opacity: 1; }
+}
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(42px, 5vw, 66px);
+  line-height: 1.06; letter-spacing: -.025em; margin-bottom: 24px;
+}
+h1 em { font-style: italic; color: var(--coral); }
+.hero-sub {
+  font-size: 18px; line-height: 1.78; color: var(--ink-70);
+  max-width: 460px; margin-bottom: 40px;
+}
+.hero-ctas { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--coral); color: #fff;
+  padding: 16px 32px; border-radius: 100px;
+  font-size: 15px; font-weight: 600; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: transform .2s, box-shadow .2s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(232,96,76,.3); }
+.btn-link {
+  font-size: 14px; font-weight: 500; color: var(--ink-70);
+  text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
+  transition: color .2s, gap .2s;
+}
+.btn-link:hover { color: var(--ink); gap: 9px; }
+
+/* HERO VISUAL — CONNECTING THE DOTS */
+.hero-visual { position: relative; display: flex; align-items: center; justify-content: center; height: 520px; }
+
+/* The three big dots */
+.dot-canvas { position: relative; width: 380px; height: 420px; }
+.hdot {
+  position: absolute; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; color: #fff;
+  box-shadow: 0 20px 60px rgba(31,27,22,.15);
+}
+.hdot-coral { width: 130px; height: 130px; background: var(--coral); left: 20px; top: 40px; animation: hdot-float 5s ease-in-out infinite; }
+.hdot-teal  { width: 130px; height: 130px; background: var(--teal); right: 20px; top: 40px; animation: hdot-float 5s ease-in-out infinite; animation-delay: 1s; }
+.hdot-gold  { width: 130px; height: 130px; background: var(--gold); left: 50%; transform: translateX(-50%); bottom: 30px; animation: hdot-float 5s ease-in-out infinite; animation-delay: 2s; }
+@keyframes hdot-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.hdot-gold { animation-name: hdot-float-gold; }
+@keyframes hdot-float-gold { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-10px); } }
+
+/* Inner cards for each dot */
+.hdot-inner { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 14px; text-align: center; }
+.hdot-emoji { font-size: 26px; }
+.hdot-label { font-size: 11px; font-weight: 700; color: #fff; line-height: 1.3; }
+.hdot-sub { font-size: 10px; color: rgba(255,255,255,.75); }
+
+/* Connecting lines — SVG overlay */
+.connect-lines {
+  position: absolute; inset: 0; pointer-events: none;
+  width: 380px; height: 420px;
+}
+.conn-line {
+  stroke-dasharray: 6 5;
+  stroke-dashoffset: 0;
+  animation: dash-move 3s linear infinite;
+}
+@keyframes dash-move { to { stroke-dashoffset: -44; } }
+
+/* Match score floating badge */
+.hero-badge {
+  position: absolute; background: #fff; border-radius: 16px;
+  padding: 12px 16px; box-shadow: 0 8px 32px rgba(31,27,22,.12);
+  animation: hdot-float 4s ease-in-out infinite; animation-delay: .5s;
+}
+.hb-left  { left: -60px; top: 160px; }
+.hb-right { right: -60px; bottom: 140px; }
+.hb-row { display: flex; align-items: center; gap: 8px; }
+.hb-icon { font-size: 20px; }
+.hb-title { font-size: 12px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+.hb-sub   { font-size: 10px; color: var(--ink-40); }
+
+/* STATS DARK BAR */
+.stats-bar { background: var(--ink); padding: 0 48px; }
+.stats-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4,1fr); border-left: 1px solid rgba(255,255,255,.07);
+}
+.stat-item {
+  padding: 36px 28px; border-right: 1px solid rgba(255,255,255,.07);
+  display: flex; flex-direction: column; gap: 5px;
+}
+.stat-n { font-family: 'DM Serif Display', serif; font-size: 38px; color: #fff; line-height: 1; }
+.stat-n span { color: var(--coral); }
+.stat-l { font-size: 13px; color: rgba(250,247,242,.45); }
+
+/* CVP STRIP */
+.cvp-strip { background: #fff; border-bottom: 1px solid var(--ink-10); }
+.cvp-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4,1fr);
+  border-left: 1px solid var(--ink-10);
+}
+.cvp-tile {
+  padding: 36px 28px; border-right: 1px solid var(--ink-10);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.cvp-dot-row { display: flex; gap: 5px; margin-bottom: 4px; }
+.cvp-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.cvp-head { font-family: 'DM Serif Display', serif; font-size: 18px; line-height: 1.2; color: var(--ink); }
+.cvp-body { font-size: 13px; color: var(--ink-70); line-height: 1.65; }
+
+/* SECTION BASE */
+.section { padding: 96px 48px; }
+.section-wrap { max-width: 1200px; margin: 0 auto; }
+.eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
+h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(30px, 3.5vw, 46px);
+  line-height: 1.12; letter-spacing: -.02em; max-width: 580px;
+}
+h2 em { font-style: italic; color: var(--coral); }
+.lead { font-size: 17px; color: var(--ink-70); line-height: 1.75; max-width: 520px; margin-top: 14px; }
+
+/* HOW IT WORKS */
+.steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 48px; margin-top: 60px; }
+.step { position: relative; }
+.step-icon {
+  width: 52px; height: 52px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 20px;
+}
+.si-coral { background: rgba(232,96,76,.12); }
+.si-teal  { background: rgba(15,181,186,.12); }
+.si-gold  { background: rgba(255,181,71,.15); }
+.step h3 { font-family: 'DM Serif Display', serif; font-size: 21px; margin-bottom: 10px; }
+.step p { font-size: 15px; color: var(--ink-70); line-height: 1.7; }
+
+/* CONNECTING-THE-DOTS VISUAL BETWEEN STEPS */
+.step-connectors {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 48px;
+  margin: 32px 0 0; align-items: start; pointer-events: none;
+}
+.step-conn-line {
+  height: 2px; background: linear-gradient(90deg, var(--coral), var(--teal));
+  border-radius: 2px; opacity: .25; margin-top: 26px;
+}
+
+/* FEATURE BENTO */
+.bento { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; margin-top: 56px; border-radius: 24px; overflow: hidden; }
+.b-tile { padding: 40px; }
+.b-wide { grid-column: span 2; }
+.b-cream { background: var(--card); }
+.b-coral { background: var(--coral); }
+.b-teal  { background: var(--teal); }
+.b-gold  { background: var(--gold); }
+.b-icon  { font-size: 30px; margin-bottom: 16px; }
+.b-tile h3 { font-family: 'DM Serif Display', serif; font-size: 21px; margin-bottom: 10px; line-height: 1.2; }
+.b-tile p  { font-size: 14px; line-height: 1.7; }
+.b-coral h3, .b-coral p, .b-teal h3, .b-teal p { color: #fff; }
+.b-coral p, .b-teal p { color: rgba(255,255,255,.78); }
+/* Dot motif on cream tiles */
+.b-dots { display: flex; gap: 5px; margin-bottom: 14px; }
+.b-dot { width: 9px; height: 9px; border-radius: 50%; }
+
+/* SAFETY */
+.safety-section { background: var(--ink); padding: 96px 48px; }
+.safety-wrap {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.safety-section .eyebrow { color: var(--teal); }
+.safety-section h2 { color: #fff; max-width: none; }
+.safety-section h2 em { color: var(--gold); }
+.safety-section .lead { color: rgba(250,247,242,.55); }
+.safety-list { list-style: none; margin-top: 36px; display: flex; flex-direction: column; gap: 22px; }
+.s-item { display: flex; gap: 14px; align-items: flex-start; }
+.s-check {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(15,181,186,.18);
+  display: flex; align-items: center; justify-content: center; font-size: 14px;
+}
+.s-title { font-size: 15px; font-weight: 600; color: #fff; }
+.s-desc  { font-size: 13px; color: rgba(250,247,242,.45); margin-top: 2px; line-height: 1.5; }
+.safety-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.stag {
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+  color: rgba(250,247,242,.65); padding: 5px 13px; border-radius: 100px;
+  font-size: 12px; font-weight: 500;
+}
+/* Safety visual */
+.safety-visual {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 24px; padding: 36px;
+}
+.sos-box { text-align: center; padding: 16px 0 28px; }
+.sos-ring {
+  width: 88px; height: 88px; border-radius: 50%;
+  background: rgba(239,68,68,.14); border: 2px solid rgba(239,68,68,.3);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 14px; animation: sos-pulse 2.2s ease-in-out infinite;
+}
+.sos-core {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: #EF4444; display: flex; align-items: center; justify-content: center; font-size: 24px;
+}
+@keyframes sos-pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,.4); } 50% { box-shadow: 0 0 0 14px rgba(239,68,68,0); } }
+.sos-label { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 3px; }
+.sos-sub   { font-size: 12px; color: rgba(250,247,242,.4); }
+.safety-feats { border-top: 1px solid rgba(255,255,255,.08); padding-top: 22px; display: flex; flex-direction: column; gap: 13px; }
+.sfeat { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(250,247,242,.65); }
+
+/* WHO IT'S FOR */
+.for-section { padding: 96px 48px; background: var(--card); }
+.for-wrap { max-width: 1200px; margin: 0 auto; }
+.for-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; margin-top: 56px; border-radius: 24px; overflow: hidden; }
+.for-tile {
+  background: #fff; padding: 36px 32px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.for-dot-row { display: flex; gap: 5px; margin-bottom: 4px; }
+.for-emoji { font-size: 36px; }
+.for-tile h3 { font-family: 'DM Serif Display', serif; font-size: 20px; }
+.for-tile p  { font-size: 14px; color: var(--ink-70); line-height: 1.65; }
+.for-tag { font-size: 12px; font-weight: 600; color: var(--teal); }
+
+/* CTA */
+.cta-section {
+  padding: 120px 48px; text-align: center; position: relative; overflow: hidden;
+  background: linear-gradient(140deg, var(--coral) 0%, #be3a27 50%, var(--ink) 100%);
+}
+.cta-orbs { position: absolute; inset: 0; pointer-events: none; }
+.cta-orb {
+  position: absolute; border-radius: 50%; filter: blur(60px); opacity: .18;
+}
+.cta-orb-1 { width: 300px; height: 300px; background: var(--teal); top: -80px; left: 10%; }
+.cta-orb-2 { width: 250px; height: 250px; background: var(--gold); bottom: -60px; right: 10%; }
+.cta-wrap { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+/* Three dot logo in CTA */
+.cta-logo { display: flex; justify-content: center; margin-bottom: 32px; }
+.cta-logo svg { width: 60px; height: 64px; filter: drop-shadow(0 8px 24px rgba(0,0,0,.3)); }
+.cta-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(32px,4.5vw,52px); color: #fff; max-width: none; margin-bottom: 18px; }
+.cta-section p  { font-size: 17px; color: rgba(255,255,255,.72); line-height: 1.75; margin-bottom: 36px; }
+.cta-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.cta-input {
+  padding: 16px 24px; border-radius: 100px; border: none; outline: none;
+  font-family: 'DM Sans', sans-serif; font-size: 15px;
+  width: 280px; background: rgba(255,255,255,.94); color: var(--ink);
+}
+.cta-input::placeholder { color: var(--ink-40); }
+.btn-white {
+  background: #fff; color: var(--coral);
+  padding: 16px 30px; border-radius: 100px; border: none;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: transform .2s, box-shadow .2s; white-space: nowrap;
+}
+.btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+.cta-note { font-size: 12px; color: rgba(255,255,255,.38); margin-top: 14px; }
+
+/* FOOTER */
+footer {
+  background: var(--ink); padding: 44px 48px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+}
+.footer-logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.footer-logo-mark { width: 28px; height: 28px; }
+.footer-word { font-family: 'DM Serif Display', serif; font-size: 20px; color: #fff; }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-links a { font-size: 13px; color: rgba(250,247,242,.35); text-decoration: none; transition: color .2s; }
+.footer-links a:hover { color: rgba(250,247,242,.7); }
+.footer-copy { font-size: 12px; color: rgba(250,247,242,.22); }
+
+/* ANIMATION */
+.fade-up { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  nav { padding: 16px 24px; }
+  .nav-links a { display: none; }
+  .hero { padding: 100px 24px 60px; }
+  .hero-wrap { grid-template-columns: 1fr; gap: 56px; text-align: center; }
+  .hero-sub { max-width: none; }
+  .hero-ctas { justify-content: center; }
+  .hero-visual { height: 360px; }
+  .dot-canvas { width: 300px; height: 340px; }
+  .hdot { width: 100px; height: 100px; }
+  .hb-left, .hb-right { display: none; }
+  .connect-lines { width: 300px; height: 340px; }
+  .stats-inner { grid-template-columns: repeat(2,1fr); }
+  .cvp-inner { grid-template-columns: repeat(2,1fr); }
+  .section { padding: 64px 24px; }
+  .safety-section { padding: 64px 24px; }
+  .for-section { padding: 64px 24px; }
+  .steps { grid-template-columns: 1fr; gap: 32px; }
+  .bento { grid-template-columns: 1fr; }
+  .b-wide { grid-column: span 1; }
+  .safety-wrap { grid-template-columns: 1fr; gap: 48px; }
+  .for-grid { grid-template-columns: 1fr; }
+  .cta-section { padding: 80px 24px; }
+  footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg class="logo-mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="178" cy="205" r="70" fill="#E8604C"/>
+      <circle cx="334" cy="205" r="70" fill="#0FB5BA"/>
+      <circle cx="256" cy="340" r="70" fill="#FFB547"/>
+    </svg>
+    <span class="logo-word">Wanderly</span>
+  </a>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#safety">Safety</a>
+    <a href="#join" class="nav-pill">Get early access</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="hero-wrap">
+    <div>
+      <div class="beta-badge fade-up">
+        <div class="beta-dot-group">
+          <div class="beta-dot bd-1"></div>
+          <div class="beta-dot bd-2"></div>
+          <div class="beta-dot bd-3"></div>
+        </div>
+        Beta coming soon
+      </div>
+      <h1 class="fade-up">Find your<br><em>travel tribe</em></h1>
+      <p class="hero-sub fade-up">Match by trip, not just profile. Connect with verified travel companions heading the same way — from a single dinner to a three-week adventure. Your terms, always.</p>
+      <div class="hero-ctas fade-up">
+        <a href="#join" class="btn-primary">
+          Get early access
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#how" class="btn-link">
+          See how it works
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- CONNECTING THE DOTS VISUAL -->
+    <div class="hero-visual fade-up">
+
+      <!-- Floating info badges -->
+      <div class="hero-badge hb-left">
+        <div class="hb-row"><div class="hb-icon">🎯</div><div>
+          <div class="hb-title">92% match score</div>
+          <div class="hb-sub">Destination · Dates · Vibe</div>
+        </div></div>
+      </div>
+      <div class="hero-badge hb-right">
+        <div class="hb-row"><div class="hb-icon">🛡️</div><div>
+          <div class="hb-title">Photo verified</div>
+          <div class="hb-sub">Liveness check passed</div>
+        </div></div>
+      </div>
+
+      <div class="dot-canvas">
+        <!-- Connecting lines SVG -->
+        <svg class="connect-lines" viewBox="0 0 380 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Line: coral to teal -->
+          <line x1="85" y1="105" x2="295" y2="105" stroke="url(#lg1)" stroke-width="2" class="conn-line"/>
+          <!-- Line: coral to gold -->
+          <line x1="85" y1="105" x2="190" y2="310" stroke="url(#lg2)" stroke-width="2" class="conn-line" style="animation-delay:1s"/>
+          <!-- Line: teal to gold -->
+          <line x1="295" y1="105" x2="190" y2="310" stroke="url(#lg3)" stroke-width="2" class="conn-line" style="animation-delay:2s"/>
+          <!-- Small connector dots along lines -->
+          <circle cx="190" cy="105" r="3" fill="rgba(232,96,76,.4)"/>
+          <circle cx="138" cy="208" r="3" fill="rgba(255,181,71,.4)"/>
+          <circle cx="243" cy="208" r="3" fill="rgba(15,181,186,.4)"/>
+          <defs>
+            <linearGradient id="lg1" x1="85" y1="105" x2="295" y2="105" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#E8604C" stop-opacity=".5"/>
+              <stop offset="100%" stop-color="#0FB5BA" stop-opacity=".5"/>
+            </linearGradient>
+            <linearGradient id="lg2" x1="85" y1="105" x2="190" y2="310" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#E8604C" stop-opacity=".5"/>
+              <stop offset="100%" stop-color="#FFB547" stop-opacity=".5"/>
+            </linearGradient>
+            <linearGradient id="lg3" x1="295" y1="105" x2="190" y2="310" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#0FB5BA" stop-opacity=".5"/>
+              <stop offset="100%" stop-color="#FFB547" stop-opacity=".5"/>
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <!-- Coral dot — Traveler A -->
+        <div class="hdot hdot-coral">
+          <div class="hdot-inner">
+            <div class="hdot-emoji">🥾</div>
+            <div class="hdot-label">Maya</div>
+            <div class="hdot-sub">Bali · Mar 12</div>
+          </div>
+        </div>
+        <!-- Teal dot — Traveler B -->
+        <div class="hdot hdot-teal">
+          <div class="hdot-inner">
+            <div class="hdot-emoji">📸</div>
+            <div class="hdot-label">Liam</div>
+            <div class="hdot-sub">Bali · Mar 10</div>
+          </div>
+        </div>
+        <!-- Gold dot — Destination -->
+        <div class="hdot hdot-gold">
+          <div class="hdot-inner">
+            <div class="hdot-emoji">🌴</div>
+            <div class="hdot-label">Bali</div>
+            <div class="hdot-sub">Your trip</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item fade-up">
+      <div class="stat-n">71<span>%</span></div>
+      <div class="stat-l">Of travelers actively look for companions on the road</div>
+    </div>
+    <div class="stat-item fade-up">
+      <div class="stat-n">68<span>%</span></div>
+      <div class="stat-l">Form friendships that outlast the trip</div>
+    </div>
+    <div class="stat-item fade-up">
+      <div class="stat-n">9.3<span>B</span></div>
+      <div class="stat-l">TikTok views on #solotravel — the demand is there</div>
+    </div>
+    <div class="stat-item fade-up">
+      <div class="stat-n">0<span>apps</span></div>
+      <div class="stat-l">That truly solve trip-first matching with built-in safety</div>
+    </div>
+  </div>
+</div>
+
+<!-- CVP STRIP -->
+<div class="cvp-strip">
+  <div class="cvp-inner">
+    <div class="cvp-tile fade-up">
+      <div class="cvp-dot-row"><div class="cvp-dot" style="background:var(--coral)"></div><div class="cvp-dot" style="background:var(--teal)"></div><div class="cvp-dot" style="background:var(--gold)"></div></div>
+      <div class="cvp-head">Find your travel tribe</div>
+      <div class="cvp-body">Real people with real plans — not just profiles to swipe through.</div>
+    </div>
+    <div class="cvp-tile fade-up">
+      <div class="cvp-dot-row"><div class="cvp-dot" style="background:var(--teal)"></div><div class="cvp-dot" style="background:var(--gold)"></div><div class="cvp-dot" style="background:var(--coral)"></div></div>
+      <div class="cvp-head">Match by trip, not profile</div>
+      <div class="cvp-body">Your destination and dates do the matching — not just shared interests.</div>
+    </div>
+    <div class="cvp-tile fade-up">
+      <div class="cvp-dot-row"><div class="cvp-dot" style="background:var(--gold)"></div><div class="cvp-dot" style="background:var(--coral)"></div><div class="cvp-dot" style="background:var(--teal)"></div></div>
+      <div class="cvp-head">Travel safer, together</div>
+      <div class="cvp-body">Verified identities, SOS, and safety tools built into every connection.</div>
+    </div>
+    <div class="cvp-tile fade-up" style="border-right:none">
+      <div class="cvp-dot-row"><div class="cvp-dot" style="background:var(--coral)"></div><div class="cvp-dot" style="background:var(--gold)"></div><div class="cvp-dot" style="background:var(--teal)"></div></div>
+      <div class="cvp-head">Your adventure, your terms</div>
+      <div class="cvp-body">One dinner. A weekend. A full co-trip. Exactly as much as you want.</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="section-wrap">
+    <div class="eyebrow fade-up">How it works</div>
+    <h2 class="fade-up">Three dots. <em>One connection.</em></h2>
+    <p class="lead fade-up">Wanderly connects people around shared plans — not just shared tastes. Post your trip, get matched to real travelers heading the same way, and go at your own pace.</p>
+    <div class="steps">
+      <div class="step fade-up">
+        <div class="step-icon si-coral">🗺️</div>
+        <h3>Post your trip</h3>
+        <p>Tell Wanderly where you're going, when, and the kind of experience you're after. A weekend in Bali. Three weeks through Vietnam. Any shape, any pace.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-icon si-teal">✈️</div>
+        <h3>Connect the dots</h3>
+        <p>Your destination, dates, travel style — and a compatibility score that shows exactly why you'd travel well together. Not guesswork. Real overlap.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-icon si-gold">🔄</div>
+        <h3>Your terms, always</h3>
+        <p>Chat, plan, and choose your level — one meal, a few days, the whole journey. No obligation. Change your mind anytime. It's your adventure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features" style="padding-top:0">
+  <div class="section-wrap">
+    <div class="eyebrow fade-up">What makes Wanderly different</div>
+    <h2 class="fade-up">Built around how people <em>actually want to travel</em></h2>
+    <div class="bento">
+      <div class="b-tile b-coral b-wide fade-up">
+        <div class="b-dots"><div class="b-dot" style="background:rgba(255,255,255,.5)"></div><div class="b-dot" style="background:rgba(255,255,255,.3)"></div><div class="b-dot" style="background:rgba(255,255,255,.2)"></div></div>
+        <div class="b-icon">🎯</div>
+        <h3>Trip-first matching</h3>
+        <p>Most apps match you to a person and hope for the best. Wanderly matches you around a real plan — destination, dates, vibe — and surfaces the people who genuinely fit it. Your compatibility score tells you why.</p>
+      </div>
+      <div class="b-tile b-cream fade-up">
+        <div class="b-dots"><div class="b-dot" style="background:var(--coral)"></div><div class="b-dot" style="background:var(--teal)"></div><div class="b-dot" style="background:var(--gold)"></div></div>
+        <div class="b-icon">🔄</div>
+        <h3>Your adventure, your terms</h3>
+        <p>One coffee. A day hike. The whole trip. Set your own level and change it anytime — no obligation, ever.</p>
+      </div>
+      <div class="b-tile b-teal fade-up">
+        <div class="b-dots"><div class="b-dot" style="background:rgba(255,255,255,.5)"></div><div class="b-dot" style="background:rgba(255,255,255,.3)"></div><div class="b-dot" style="background:rgba(255,255,255,.2)"></div></div>
+        <div class="b-icon">🌍</div>
+        <h3>Find your tribe</h3>
+        <p>Launching across Southeast Asia's top travel destinations. The right companion for your next trip is already out there.</p>
+      </div>
+      <div class="b-tile b-cream fade-up">
+        <div class="b-dots"><div class="b-dot" style="background:var(--teal)"></div><div class="b-dot" style="background:var(--coral)"></div><div class="b-dot" style="background:var(--gold)"></div></div>
+        <div class="b-icon">💬</div>
+        <h3>Plan together, in-app</h3>
+        <p>Chat, share itineraries, and coordinate in one place. In-chat translation across 50+ languages so language is never a barrier.</p>
+      </div>
+      <div class="b-tile b-gold fade-up">
+        <div class="b-dots"><div class="b-dot" style="background:rgba(255,255,255,.5)"></div><div class="b-dot" style="background:rgba(255,255,255,.3)"></div><div class="b-dot" style="background:rgba(255,255,255,.2)"></div></div>
+        <div class="b-icon">⭐</div>
+        <h3>Two-way reviews</h3>
+        <p>After every trip, both travelers review each other. Your reputation grows with every connection — building a community you can trust.</p>
+      </div>
+      <div class="b-tile b-cream fade-up">
+        <div class="b-dots"><div class="b-dot" style="background:var(--gold)"></div><div class="b-dot" style="background:var(--teal)"></div><div class="b-dot" style="background:var(--coral)"></div></div>
+        <div class="b-icon">🤝</div>
+        <h3>Women-first mode</h3>
+        <p>A dedicated women-only pool available to any female traveler — on by default or toggled anytime, no explanation needed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section class="safety-section" id="safety">
+  <div class="safety-wrap">
+    <div>
+      <div class="eyebrow fade-up">Travel safer, together</div>
+      <h2 class="fade-up">Safety isn't a feature. <em>It's the product.</em></h2>
+      <p class="lead fade-up">Meeting a stranger should feel safe by design — not by luck. Wanderly builds trust into every step, before you say hello and long after you part ways.</p>
+      <ul class="safety-list">
+        <li class="s-item fade-up">
+          <div class="s-check">🪪</div>
+          <div>
+            <div class="s-title">Photo & liveness verification</div>
+            <div class="s-desc">Every Wanderly profile goes through a photo and real-time liveness check. You always know who you're connecting with.</div>
+          </div>
+        </li>
+        <li class="s-item fade-up">
+          <div class="s-check">📍</div>
+          <div>
+            <div class="s-title">Live location sharing</div>
+            <div class="s-desc">Share your real-time location with up to 5 trusted contacts during any meet-up. Auto-expires when you're done.</div>
+          </div>
+        </li>
+        <li class="s-item fade-up">
+          <div class="s-check">📋</div>
+          <div>
+            <div class="s-title">Pre-meet safety checklist</div>
+            <div class="s-desc">A built-in guide before every first meeting — public venue suggestions, what to share with your people, and tips from verified travelers.</div>
+          </div>
+        </li>
+        <li class="s-item fade-up">
+          <div class="s-check">🆘</div>
+          <div>
+            <div class="s-title">SOS — always one tap away</div>
+            <div class="s-desc">Instantly alerts your trusted contacts and local emergency services, accessible from any screen at any time.</div>
+          </div>
+        </li>
+      </ul>
+      <div class="safety-tags">
+        <div class="stag">Photo & liveness verified</div>
+        <div class="stag">Liveness check</div>
+        <div class="stag">Encrypted chats</div>
+        <div class="stag">Women-only mode</div>
+        <div class="stag">24/7 moderation</div>
+      </div>
+    </div>
+    <div class="safety-visual fade-up">
+      <div class="sos-box">
+        <div class="sos-ring"><div class="sos-core">🆘</div></div>
+        <div class="sos-label">SOS — always one tap away</div>
+        <div class="sos-sub">Alerts contacts + local emergency services instantly</div>
+      </div>
+      <div class="safety-feats">
+        <div class="sfeat"><span>🪪</span> Photo &amp; liveness verification</div>
+        <div class="sfeat"><span>📍</span> Live location sharing with trusted contacts</div>
+        <div class="sfeat"><span>🏙️</span> Destination safety guides for every city</div>
+        <div class="sfeat"><span>📞</span> Local emergency numbers, always visible</div>
+        <div class="sfeat"><span>🤝</span> Recommended public spots for first meets</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="for-section" id="for">
+  <div class="for-wrap">
+    <div class="eyebrow fade-up">Who it's for</div>
+    <h2 class="fade-up">Every traveler has a <em>different kind of tribe</em> they're looking for</h2>
+    <p class="lead fade-up">Wanderly is built for anyone who travels and wants genuine human connection along the way — whether that's a meal, a hike, or a whole adventure.</p>
+    <div class="for-grid">
+      <div class="for-tile fade-up">
+        <div class="for-dot-row"><div class="cvp-dot" style="width:9px;height:9px;border-radius:50%;background:var(--coral)"></div></div>
+        <div class="for-emoji">🥾</div>
+        <h3>The adventure seeker</h3>
+        <p>Looking for a hiking companion who can keep up and keep the conversation going — not just someone heading the same direction.</p>
+        <div class="for-tag">→ Treks, off-beat routes, shared risk</div>
+      </div>
+      <div class="for-tile fade-up">
+        <div class="for-dot-row"><div class="cvp-dot" style="width:9px;height:9px;border-radius:50%;background:var(--teal)"></div></div>
+        <div class="for-emoji">🍜</div>
+        <h3>The experience hunter</h3>
+        <p>City trips built around food, culture, and local life. Wants a companion for the experience — not necessarily the full trip.</p>
+        <div class="for-tag">→ Dinners, day trips, city exploration</div>
+      </div>
+      <div class="for-tile fade-up">
+        <div class="for-dot-row"><div class="cvp-dot" style="width:9px;height:9px;border-radius:50%;background:var(--gold)"></div></div>
+        <div class="for-emoji">💻</div>
+        <h3>The long-term traveler</h3>
+        <p>Moving cities every few weeks. Needs real connection in each new place — not just a co-working desk to sit at.</p>
+        <div class="for-tag">→ Community, regulars, local knowledge</div>
+      </div>
+      <div class="for-tile fade-up">
+        <div class="for-dot-row"><div class="cvp-dot" style="width:9px;height:9px;border-radius:50%;background:var(--coral)"></div><div class="cvp-dot" style="width:9px;height:9px;border-radius:50%;background:var(--teal)"></div></div>
+        <div class="for-emoji">🛳️</div>
+        <h3>The seasoned explorer</h3>
+        <p>Cultural tours and cruises. Wants peer-aged companions who share the same pace — and help split the costs along the way.</p>
+        <div class="for-tag">→ Comfort travel, cultural depth</div>
+      </div>
+      <div class="for-tile fade-up">
+        <div class="for-dot-row"><div class="cvp-dot" style="width:9px;height:9px;border-radius:50%;background:var(--teal)"></div><div class="cvp-dot" style="width:9px;height:9px;border-radius:50%;background:var(--gold)"></div></div>
+        <div class="for-emoji">🎒</div>
+        <h3>The budget backpacker</h3>
+        <p>Making the most of every dollar. Safety in numbers, new friendships, and someone to split a boat taxi with.</p>
+        <div class="for-tag">→ Cost-sharing, island hopping, hostels</div>
+      </div>
+      <div class="for-tile fade-up">
+        <div class="for-dot-row"><div class="cvp-dot" style="width:9px;height:9px;border-radius:50%;background:var(--gold)"></div><div class="cvp-dot" style="width:9px;height:9px;border-radius:50%;background:var(--coral)"></div></div>
+        <div class="for-emoji">🌸</div>
+        <h3>The safety-conscious traveler</h3>
+        <p>Wants to meet people and explore freely — but on her own terms, with the confidence that every connection is verified and safe.</p>
+        <div class="for-tag">→ Women-only mode, verified profiles</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="join">
+  <div class="cta-orbs"><div class="cta-orb cta-orb-1"></div><div class="cta-orb cta-orb-2"></div></div>
+  <div class="cta-wrap">
+    <div class="cta-logo">
+      <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="178" cy="205" r="70" fill="#E8604C"/>
+        <circle cx="334" cy="205" r="70" fill="#0FB5BA"/>
+        <circle cx="256" cy="340" r="70" fill="#FFB547"/>
+      </svg>
+    </div>
+    <h2 class="fade-up">Three dots. <em>Infinite connections.</em></h2>
+    <p class="fade-up">Wanderly is coming soon. Be first to find your travel tribe when we launch — and help shape the app before anyone else gets to.</p>
+    <form class="cta-form fade-up" id="waitlistForm"
+      action="https://docs.google.com/forms/d/e/1FAIpQLSdqCXDeWxv6Ds_8-0YaXXaTuVLkdH_qsAxJyne1o3i9d7pC3Q/formResponse"
+      method="POST" target="hidden_iframe" onsubmit="handleSubmit()">
+      <input type="email" name="entry.8" class="cta-input" placeholder="Your email address" required>
+      <button type="submit" class="btn-white" id="joinBtn">Join the waitlist</button>
+    </form>
+    <iframe name="hidden_iframe" style="display:none"></iframe>
+    <p class="cta-note" id="cta-note">Free during beta &nbsp;·&nbsp; No spam &nbsp;·&nbsp; Unsubscribe anytime</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo-wrap">
+    <svg class="footer-logo-mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="178" cy="205" r="70" fill="#E8604C"/>
+      <circle cx="334" cy="205" r="70" fill="#0FB5BA"/>
+      <circle cx="256" cy="340" r="70" fill="#FFB547"/>
+    </svg>
+    <span class="footer-word">Wanderly</span>
+  </a>
+  <div class="footer-links"><a href="https://wanderly.tech/" target="_blank">wanderly.tech</a><a href="mailto:wanderly@wanderly.tech">wanderly@wanderly.tech</a></div>
+  <p class="footer-copy">© 2026 Wanderly. Made with ♥ for travelers.</p>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+  ['.steps','.bento','.cvp-inner','.safety-list','.for-grid','.stats-inner'].forEach(sel => {
+    const p = document.querySelector(sel);
+    if (p) p.querySelectorAll('.fade-up').forEach((c,i) => c.style.transitionDelay = `${i*0.09}s`);
+  });
+
+  document.getElementById('joinBtn').addEventListener('click', function() {
+    const inp = document.querySelector('.cta-input');
+    if (inp.value && inp.value.includes('@')) {
+      this.textContent = '✓ You\'re on the list!';
+      this.style.background = '#22C55E'; this.style.color = '#fff';
+      inp.disabled = true;
+    } else {
+      inp.style.boxShadow = '0 0 0 3px rgba(255,255,255,0.6)'; inp.focus();
+      setTimeout(() => inp.style.boxShadow = '', 1500);
+    }
+  });
+</script>
+</body>
+</html>
