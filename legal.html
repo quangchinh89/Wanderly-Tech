@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal — Wanderly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --coral:  #E8604C;
+      --teal:   #0FB5BA;
+      --cream:  #FAF7F2;
+      --ink:    #1F1B16;
+      --muted:  #7A7268;
+      --border: #E8E2D9;
+      --card:   #F0EBE3;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.7; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(250,247,242,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--coral); text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--coral); }
+
+    /* HERO */
+    .hero { text-align: center; padding: 5rem 2rem 3rem; max-width: 720px; margin: 0 auto; }
+    .hero-eyebrow { display: inline-block; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral); margin-bottom: 1rem; }
+    .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+    .hero p { color: var(--muted); font-size: 1rem; max-width: 520px; margin: 0 auto 0.5rem; }
+    .hero-meta { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
+
+    /* LAYOUT */
+    .page { max-width: 960px; margin: 0 auto; padding: 0 2rem 6rem; display: grid; grid-template-columns: 220px 1fr; gap: 3rem; align-items: start; }
+
+    /* SIDEBAR */
+    .sidebar { position: sticky; top: 84px; }
+    .sidebar-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .sidebar nav { position: static; background: none; border: none; backdrop-filter: none; padding: 0; display: block; height: auto; }
+    .sidebar-links { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
+    .sidebar-links a { display: block; padding: 0.45rem 0.75rem; border-radius: 8px; text-decoration: none; font-size: 0.9rem; color: var(--muted); transition: all 0.15s; border-left: 2px solid transparent; }
+    .sidebar-links a:hover { color: var(--coral); background: var(--card); border-left-color: var(--coral); }
+    .sidebar-divider { height: 1px; background: var(--border); margin: 0.75rem 0; }
+    .sidebar-links .doc-title { font-weight: 600; color: var(--ink); font-size: 0.85rem; padding: 0.3rem 0.75rem; pointer-events: none; display: block; }
+
+    /* CONTENT */
+    .content { min-width: 0; }
+    .doc-section { margin-bottom: 4rem; padding-top: 2rem; }
+    .doc-section:not(:first-child) { border-top: 1px solid var(--border); }
+    .doc-badge { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--coral); margin-bottom: 0.75rem; }
+    .doc-badge::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--coral); }
+    .doc-section h2 { font-family: 'DM Serif Display', serif; font-size: 1.9rem; color: var(--ink); margin-bottom: 0.4rem; line-height: 1.2; }
+    .doc-updated { font-size: 0.82rem; color: var(--muted); margin-bottom: 2rem; }
+    .doc-intro { font-size: 1rem; color: var(--muted); margin-bottom: 2rem; padding: 1.25rem 1.5rem; background: var(--card); border-radius: 12px; border-left: 3px solid var(--coral); }
+    .content h3 { font-size: 1rem; font-weight: 600; color: var(--ink); margin: 1.75rem 0 0.5rem; }
+    .content h4 { font-size: 0.9rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin: 1.25rem 0 0.4rem; }
+    .content p { color: var(--ink); margin-bottom: 0.75rem; font-size: 0.95rem; }
+    .content ul { list-style: none; margin: 0.5rem 0 1rem; display: flex; flex-direction: column; gap: 0.4rem; }
+    .content ul li { font-size: 0.95rem; color: var(--ink); padding-left: 1.25rem; position: relative; }
+    .content ul li::before { content: '—'; position: absolute; left: 0; color: var(--coral); font-weight: 600; }
+    .alert-box { background: #FFF4F2; border: 1px solid #F5C4BB; border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0; font-size: 0.9rem; color: var(--ink); }
+    .alert-box strong { color: var(--coral); }
+    .caps-block { font-size: 0.85rem; color: var(--muted); background: var(--card); border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0; line-height: 1.6; }
+    .values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0; }
+    .value-card { background: var(--card); border-radius: 10px; padding: 1rem 1.25rem; font-size: 0.9rem; }
+    .value-card strong { display: block; color: var(--ink); margin-bottom: 0.25rem; }
+    .value-card span { color: var(--muted); font-size: 0.85rem; }
+
+    /* FOOTER */
+    footer { background: var(--ink); color: var(--cream); text-align: center; padding: 2.5rem 2rem; font-size: 0.875rem; }
+    footer a { color: var(--coral); text-decoration: none; }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .footer-links a { color: rgba(250,247,242,0.6); font-size: 0.85rem; }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-links a.active { color: var(--coral); }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      .page { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      nav .nav-links { display: none; }
+      .values-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">Wanderly</a>
+  <ul class="nav-links">
+    <li><a href="/#how">How it works</a></li>
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/#safety">Safety</a></li>
+    <li><a href="/#join">Get early access</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <span class="hero-eyebrow">Legal &amp; Policies</span>
+  <h1>Our commitment to <em>you</em></h1>
+  <p>Everything that governs how Wanderly works, what we expect from our community, and how we protect your data.</p>
+  <p class="hero-meta">Effective date: 18 June 2026 &nbsp;·&nbsp; Governing law: Vietnam &nbsp;·&nbsp; <a href="mailto:support@wanderly.tech" style="color:var(--coral)">support@wanderly.tech</a></p>
+</div>
+
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <p class="sidebar-label">On this page</p>
+    <nav>
+      <ul class="sidebar-links">
+        <li><span class="doc-title">Terms of Service</span></li>
+        <li><a href="#tos-eligibility">Eligibility</a></li>
+        <li><a href="#tos-accounts">Accounts &amp; security</a></li>
+        <li><a href="#tos-verification">Verification</a></li>
+        <li><a href="#tos-use">Acceptable use</a></li>
+        <li><a href="#tos-content">Your content</a></li>
+        <li><a href="#tos-safety">Safety features</a></li>
+        <li><a href="#tos-termination">Termination</a></li>
+        <li><a href="#tos-liability">Liability</a></li>
+        <div class="sidebar-divider"></div>
+        <li><span class="doc-title">Privacy Policy</span></li>
+        <li><a href="#priv-collect">Data we collect</a></li>
+        <li><a href="#priv-use">How we use it</a></li>
+        <li><a href="#priv-sharing">Data sharing</a></li>
+        <li><a href="#priv-rights">Your rights</a></li>
+        <li><a href="#priv-security">Security</a></li>
+        <div class="sidebar-divider"></div>
+        <li><span class="doc-title">Community Guidelines</span></li>
+        <li><a href="#cg-identity">Be who you are</a></li>
+        <li><a href="#cg-respect">Respect &amp; harassment</a></li>
+        <li><a href="#cg-sexual">No sexual content</a></li>
+        <li><a href="#cg-illegal">No illegal activity</a></li>
+        <li><a href="#cg-safety">Stay safe</a></li>
+        <li><a href="#cg-consequences">Consequences</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="content">
+
+    <!-- TERMS OF SERVICE -->
+    <section class="doc-section" id="tos">
+      <span class="doc-badge">Document 1 of 3</span>
+      <h2>Terms of Service</h2>
+      <p class="doc-updated">Last updated: 18 June 2026 &nbsp;·&nbsp; Effective: 18 June 2026</p>
+      <p class="doc-intro">By accessing or using Wanderly ("we," "us," "our," or the "App"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree, do not use the App. Wanderly is a travel companion-matching platform that helps travelers connect with others for shared trips and experiences. It is not a dating app.</p>
+
+      <h3 id="tos-eligibility">1. Agreement to Terms</h3>
+      <p>By accessing or using Wanderly, you agree to be bound by these Terms. If you do not agree, do not use the App.</p>
+
+      <h3>2. Eligibility</h3>
+      <p>To use Wanderly you must:</p>
+      <ul>
+        <li>Be at least 18 years old (or the age of majority in your jurisdiction, whichever is higher).</li>
+        <li>Provide accurate, current, and complete registration information.</li>
+        <li>Not be prohibited from using the App under applicable law.</li>
+        <li>Not have been previously banned or removed from Wanderly for a Terms violation.</li>
+      </ul>
+
+      <h3 id="tos-accounts">3. Account Registration &amp; Security</h3>
+      <p>You are responsible for maintaining the confidentiality of your account credentials. You agree to:</p>
+      <ul>
+        <li>Provide truthful information during registration and keep your profile accurate.</li>
+        <li>Not share your account with any other person.</li>
+        <li>Notify us immediately at <a href="mailto:support@wanderly.tech">support@wanderly.tech</a> if you suspect unauthorized access.</li>
+      </ul>
+      <p>Wanderly is not liable for losses arising from unauthorized account use that results from your failure to keep credentials secure.</p>
+
+      <h3 id="tos-verification">4. Identity Verification</h3>
+      <p>Wanderly offers an optional identity verification service powered by third-party providers. A verified badge signals that a user has completed our verification process at the time of review. Verification does not constitute a background check, guarantee of identity, or endorsement of any user's character, intentions, or safety.</p>
+      <div class="alert-box"><strong>Important:</strong> Verification reduces but does not eliminate risk when meeting strangers. You will exercise your own judgment and take personal safety precautions. Wanderly is not liable for the acts or omissions of any verified or unverified user.</div>
+
+      <h3 id="tos-use">5. Acceptable Use</h3>
+      <p>You agree to use Wanderly only for lawful purposes and in accordance with these Terms. You must not:</p>
+      <h4>5.1 Prohibited Content</h4>
+      <ul>
+        <li>Post, share, or transmit content that is illegal, defamatory, fraudulent, obscene, or hateful.</li>
+        <li>Upload sexually explicit material, nudity, or content that sexualizes any person.</li>
+        <li>Share content that depicts or promotes violence, self-harm, or illegal activities.</li>
+        <li>Impersonate another person or misrepresent your identity, age, or travel plans.</li>
+        <li>Post spam, phishing links, or promote third-party commercial services without our written consent.</li>
+      </ul>
+      <h4>5.2 Prohibited Conduct</h4>
+      <ul>
+        <li>Harass, threaten, intimidate, stalk, or discriminate against any user on the basis of gender, race, nationality, religion, sexual orientation, or any other characteristic.</li>
+        <li>Use the App for any purpose other than travel companionship — including dating, solicitation, or commercial escort services.</li>
+        <li>Attempt to extract personal contact information from other users in order to communicate outside the App in a way that circumvents safety features.</li>
+        <li>Use automated tools, bots, scrapers, or scripts to access or collect data from the App.</li>
+        <li>Interfere with or disrupt the App's infrastructure, servers, or networks.</li>
+        <li>Engage in any fraudulent payment activity or chargeback abuse.</li>
+      </ul>
+
+      <h3 id="tos-content">6. Content You Post</h3>
+      <p>You retain ownership of content you submit ("User Content"). By posting User Content, you grant Wanderly a non-exclusive, worldwide, royalty-free, sublicensable licence to use, reproduce, distribute, display, and adapt that content solely for operating and improving the App.</p>
+      <p>You represent that you own or have the right to post all User Content and that it does not violate any third-party rights or applicable law. We reserve the right to remove any User Content at our discretion without notice.</p>
+
+      <h3 id="tos-safety">7. Safety Features — No Guarantee</h3>
+      <p>Wanderly provides safety features including SOS alerts, live-location sharing, trusted contact notifications, and reporting tools. These features are provided as-is and on a best-efforts basis. You acknowledge that:</p>
+      <ul>
+        <li>Technology failures, network outages, or device issues may prevent safety features from functioning.</li>
+        <li>Wanderly cannot guarantee that emergency contacts or emergency services will receive or act on alerts.</li>
+        <li>You should always carry a charged phone, share your plans independently, and take personal safety precautions when meeting anyone for the first time.</li>
+      </ul>
+
+      <h3>8. Third-Party Services</h3>
+      <p>The App integrates third-party services (identity verification, messaging, maps, booking platforms). These are governed by their own terms and privacy policies. Wanderly is not responsible for third-party services' availability, accuracy, or security practices.</p>
+
+      <h3>9. Intellectual Property</h3>
+      <p>The Wanderly name, logo, design system, and all original content on the App are owned by or licensed to Wanderly and protected by applicable intellectual property laws. You may not reproduce, distribute, or create derivative works without our written permission.</p>
+
+      <h3 id="tos-termination">10. Termination</h3>
+      <p>We may suspend or permanently terminate your account, with or without notice, if we determine — in our sole discretion — that you have violated these Terms, posed a safety risk, engaged in fraud, or otherwise acted in a way that is harmful to the community. Upon termination, your right to use the App ceases immediately. Sections 6, 11, 12, and 14 survive termination.</p>
+
+      <h3 id="tos-liability">11. Disclaimers</h3>
+      <div class="caps-block">THE APP IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED. WANDERLY DISCLAIMS ALL WARRANTIES INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. WE DO NOT WARRANT THAT THE APP WILL BE UNINTERRUPTED, ERROR-FREE, OR FREE OF VIRUSES OR HARMFUL COMPONENTS.</div>
+
+      <h3>12. Limitation of Liability</h3>
+      <div class="caps-block">TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, WANDERLY AND ITS OFFICERS, DIRECTORS, EMPLOYEES, AND AGENTS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING LOSS OF PROFITS, DATA, GOODWILL, OR PERSONAL INJURY, ARISING FROM YOUR USE OF OR INABILITY TO USE THE APP — EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. IN JURISDICTIONS THAT DO NOT ALLOW THE EXCLUSION OF CERTAIN WARRANTIES OR LIMITATION OF LIABILITY, OUR LIABILITY SHALL BE LIMITED TO THE GREATEST EXTENT PERMITTED BY LAW.</div>
+
+      <h3>13. Indemnification</h3>
+      <p>You agree to indemnify, defend, and hold harmless Wanderly and its affiliates from any claims, damages, losses, liabilities, costs, and expenses (including reasonable legal fees) arising from: (a) your use of the App; (b) your User Content; (c) your violation of these Terms; or (d) your violation of any third-party rights.</p>
+
+      <h3>14. Governing Law &amp; Dispute Resolution</h3>
+      <p>These Terms are governed by the laws of Vietnam. Any dispute arising from these Terms shall first be submitted to good-faith negotiation. If unresolved within 30 days, disputes shall be submitted to binding arbitration in Ho Chi Minh City, except that either party may seek injunctive relief in a court of competent jurisdiction.</p>
+
+      <h3>15. Changes to Terms</h3>
+      <p>We may update these Terms at any time. We will notify you of material changes via in-app notification or email. Your continued use of the App after the effective date constitutes acceptance of the updated Terms. If you do not agree, you must stop using the App.</p>
+
+      <h3>16. Contact</h3>
+      <p>For questions about these Terms: <a href="mailto:support@wanderly.tech">support@wanderly.tech</a></p>
+    </section>
+
+    <!-- PRIVACY POLICY -->
+    <section class="doc-section" id="privacy">
+      <span class="doc-badge">Document 2 of 3</span>
+      <h2>Privacy Policy</h2>
+      <p class="doc-updated">Last updated: 18 June 2026 &nbsp;·&nbsp; Effective: 18 June 2026</p>
+      <p class="doc-intro">Wanderly ("we," "us," "our") is committed to protecting your personal information. This Privacy Policy explains what data we collect, why we collect it, how we use and protect it, and your rights regarding your data. By using the App you agree to the collection and use of your data as described here.</p>
+
+      <h3 id="priv-collect">1. Data We Collect</h3>
+      <h4>Data You Provide</h4>
+      <ul>
+        <li>Account information: name, email address, date of birth, gender, home country, profile photo.</li>
+        <li>Identity verification data: government ID image, selfie/liveness scan (processed by our third-party provider; raw ID images deleted within 30 days).</li>
+        <li>Profile content: bio, travel interests, travel style, languages, past trips, uploaded photos.</li>
+        <li>Trip data: destinations, dates, itineraries, group size preferences.</li>
+        <li>Communications: messages sent and received through the in-app chat.</li>
+        <li>Reviews and ratings you submit about other users.</li>
+        <li>Safety data: trusted contacts you designate, location data shared during SOS events (only when you activate the feature).</li>
+      </ul>
+      <h4>Data Collected Automatically</h4>
+      <ul>
+        <li>Device information: device type, OS version, app version, unique device identifiers.</li>
+        <li>Usage data: features used, screens viewed, interactions within the App, crash reports.</li>
+        <li>Approximate location: city-level location used for match recommendations (precise GPS only when you explicitly activate location sharing or SOS).</li>
+        <li>Log data: IP address, access timestamps, referring URLs.</li>
+      </ul>
+      <h4>Data from Third Parties</h4>
+      <ul>
+        <li>Social login providers (Google, Facebook): profile name, email, profile picture — only what you authorize.</li>
+        <li>Identity verification providers: pass/fail result and a verification reference ID (not the raw ID document).</li>
+      </ul>
+
+      <h3 id="priv-use">2. How We Use Your Data</h3>
+      <ul>
+        <li>Create and manage your account.</li>
+        <li>Match you with compatible travelers based on destination, dates, interests, and travel style.</li>
+        <li>Enable in-app communication between matched users.</li>
+        <li>Operate safety features: SOS alerts, live-location sharing, trusted contact notifications, and incident reporting.</li>
+        <li>Verify your identity to build community trust.</li>
+        <li>Send transactional notifications (match alerts, messages, trip updates, safety check-ins).</li>
+        <li>Improve the App through analytics, A/B testing, and crash diagnostics.</li>
+        <li>Enforce our Terms of Service and Community Guidelines.</li>
+        <li>Comply with legal obligations.</li>
+      </ul>
+
+      <h3>3. Legal Bases for Processing (GDPR)</h3>
+      <p>Where GDPR applies, we rely on the following legal bases:</p>
+      <ul>
+        <li>Contract performance: processing necessary to provide the App's core services.</li>
+        <li>Legitimate interests: safety enforcement, fraud prevention, improving our services.</li>
+        <li>Consent: marketing communications; precise location sharing; processing sensitive data (you may withdraw consent at any time).</li>
+        <li>Legal obligation: compliance with applicable law, court orders, or regulatory requirements.</li>
+      </ul>
+
+      <h3 id="priv-sharing">4. Data Sharing</h3>
+      <p><strong>We do not sell your personal data.</strong> We share data only:</p>
+      <ul>
+        <li>With other users: your public profile information, trip details, and reviews are visible to other Wanderly users as intended by the App's functionality.</li>
+        <li>With service providers: identity verification, cloud hosting, analytics, push notification, and customer support providers — each bound by data processing agreements.</li>
+        <li>With trusted contacts: location data and SOS alerts, only when you activate these features.</li>
+        <li>For legal reasons: if required by law, court order, or to protect the rights, safety, or property of Wanderly or others.</li>
+        <li>In a business transfer: if Wanderly is involved in a merger, acquisition, or sale of assets, your data may be transferred. We will notify you before your data is subject to a different privacy policy.</li>
+      </ul>
+
+      <h3>5. Identity Verification Data</h3>
+      <p>Government ID images submitted for verification are processed exclusively by our third-party verification provider. Wanderly stores only the verification status (verified/unverified) and a reference token. Raw ID images are deleted within 30 days of submission. Selfie/liveness data is used solely for verification and is not used for facial recognition or marketing.</p>
+
+      <h3>6. Location Data</h3>
+      <p>We collect city-level approximate location to power match recommendations and trip discovery. We collect precise GPS location only when you explicitly activate live-location sharing or trigger an SOS event. You can disable location access at any time via your device settings, though this may limit match accuracy.</p>
+
+      <h3>7. Data Retention</h3>
+      <ul>
+        <li>Active account data: retained for as long as your account is active.</li>
+        <li>Deleted account data: most data deleted within 30 days of account deletion. Some data may be retained longer to comply with legal obligations, resolve disputes, or prevent fraud.</li>
+        <li>Chat messages: retained for 90 days after a trip ends, then deleted.</li>
+        <li>Government ID images: deleted within 30 days of submission (handled by verification provider).</li>
+        <li>Anonymised analytics data: may be retained indefinitely.</li>
+      </ul>
+
+      <h3 id="priv-security">8. Data Security</h3>
+      <p>We implement technical and organizational measures to protect your data, including encryption in transit (TLS) and at rest, access controls, and regular security reviews. No method of transmission over the internet is 100% secure; we cannot guarantee absolute security and encourage you to use strong, unique passwords.</p>
+
+      <h3 id="priv-rights">9. Your Rights</h3>
+      <p>Depending on your jurisdiction, you may have the right to:</p>
+      <ul>
+        <li>Access: request a copy of the personal data we hold about you.</li>
+        <li>Rectification: request correction of inaccurate data.</li>
+        <li>Erasure: request deletion of your data (subject to legal obligations).</li>
+        <li>Portability: receive your data in a structured, machine-readable format.</li>
+        <li>Restriction: request that we limit our processing of your data.</li>
+        <li>Object: object to processing based on legitimate interests or for direct marketing.</li>
+        <li>Withdraw consent: at any time, where processing is based on consent.</li>
+      </ul>
+      <p>To exercise any of these rights, contact us at <a href="mailto:support@wanderly.tech">support@wanderly.tech</a>. We will respond within 30 days.</p>
+
+      <h3>10. Children's Privacy</h3>
+      <p>Wanderly is not intended for anyone under 18 years of age. We do not knowingly collect personal data from minors. If we discover that a minor has registered, we will delete their account and data promptly. If you believe a minor is using the App, please contact us at <a href="mailto:support@wanderly.tech">support@wanderly.tech</a>.</p>
+
+      <h3>11. International Transfers</h3>
+      <p>Your data may be processed in countries other than where you reside, including countries that may not have the same data protection laws. Where we transfer data internationally, we implement appropriate safeguards (such as Standard Contractual Clauses) as required by applicable law.</p>
+
+      <h3>12. Changes to This Policy</h3>
+      <p>We may update this Privacy Policy from time to time. We will notify you of material changes via in-app notification or email at least 14 days before they take effect. Your continued use of the App after the effective date constitutes acceptance.</p>
+
+      <h3>13. Contact</h3>
+      <p>Data controller: Wanderly &nbsp;·&nbsp; Email: <a href="mailto:wanderly@wanderly.tech">wanderly@wanderly.tech</a></p>
+      <p>For GDPR-related enquiries or to lodge a complaint, you may also contact your local data protection authority.</p>
+    </section>
+
+    <!-- COMMUNITY GUIDELINES -->
+    <section class="doc-section" id="community">
+      <span class="doc-badge">Document 3 of 3</span>
+      <h2>Community Guidelines</h2>
+      <p class="doc-updated">Last updated: 18 June 2026</p>
+      <p class="doc-intro">Wanderly is built on a simple promise: travel is better when it's safe, inclusive, and genuine. These Community Guidelines define the standards that protect our community. Violating them may result in warnings, content removal, temporary suspension, or permanent banning — depending on severity.</p>
+
+      <h3>Our Core Values</h3>
+      <div class="values-grid">
+        <div class="value-card"><strong>🛡️ Safety first</strong><span>Every feature and decision prioritizes your physical and emotional safety.</span></div>
+        <div class="value-card"><strong>🤝 Respect for all</strong><span>Regardless of gender, race, nationality, religion, sexual orientation, disability, or background.</span></div>
+        <div class="value-card"><strong>✅ Authenticity</strong><span>Real people, real plans, real connections.</span></div>
+        <div class="value-card"><strong>✈️ Travel-only intent</strong><span>Wanderly is a travel companion app. Dating, solicitation, or misuse undermines everyone's trust.</span></div>
+      </div>
+
+      <h3 id="cg-identity">1. Be Who You Say You Are</h3>
+      <p>Authenticity is the foundation of trust in our community.</p>
+      <ul>
+        <li>Use your real name and genuine photos. No aliases, fake personas, or stock images.</li>
+        <li>Do not misrepresent your age, gender, location, or travel plans.</li>
+        <li>Do not create multiple accounts. If banned, do not re-register.</li>
+        <li>Do not impersonate another user, celebrity, or public figure.</li>
+      </ul>
+
+      <h3 id="cg-respect">2. Treat Every Traveler with Respect</h3>
+      <p>Harassment and discrimination have no place in the Wanderly community.</p>
+      <h4>Harassment — Strictly Prohibited</h4>
+      <ul>
+        <li>Sending unwanted sexual messages, images, or advances.</li>
+        <li>Continuing to contact someone after they have asked you to stop.</li>
+        <li>Threatening, intimidating, or bullying any user.</li>
+        <li>Doxxing — sharing another user's private information without their consent.</li>
+        <li>Posting or sharing content designed to humiliate, shame, or harm another person.</li>
+      </ul>
+      <h4>Discrimination — Zero Tolerance</h4>
+      <ul>
+        <li>Slurs, hate speech, or content that demeans people based on gender, race, ethnicity, nationality, religion, sexual orientation, gender identity, disability, or age.</li>
+        <li>Refusing to travel with someone on discriminatory grounds (Wanderly reserves the right to investigate such reports).</li>
+      </ul>
+
+      <h3 id="cg-sexual">3. No Sexual or Explicit Content</h3>
+      <p>Wanderly is a travel companion platform, not a dating or adult content app.</p>
+      <div class="alert-box"><strong>Immediate suspension:</strong> Violations of this section will result in immediate account suspension pending review.</div>
+      <ul>
+        <li>Do not post nudity, sexually explicit content, or suggestive photos in your profile or in chat.</li>
+        <li>Do not solicit sexual services or arrange paid companionship of any kind.</li>
+        <li>Do not use Wanderly to seek or offer romantic or sexual relationships. Use a dating app.</li>
+        <li>Do not send unsolicited sexual messages, photos, or propositions.</li>
+      </ul>
+
+      <h3 id="cg-illegal">4. No Illegal Activity</h3>
+      <p>You must not use Wanderly to plan, facilitate, or promote any illegal activity, including but not limited to:</p>
+      <ul>
+        <li>Drug trafficking, purchase, or distribution.</li>
+        <li>Human trafficking, smuggling, or exploitation of any kind.</li>
+        <li>Fraud, theft, money laundering, or financial scams.</li>
+        <li>Illegal border crossings or document forgery.</li>
+        <li>Any activity that violates local law in any destination.</li>
+      </ul>
+      <p>We cooperate fully with law enforcement investigations. If you witness illegal activity, report it immediately using the in-app report function and contact local authorities.</p>
+
+      <h3>5. Be Honest About Your Travel Plans</h3>
+      <p>Wanderly matches are built around real trips. Misrepresenting your plans wastes others' time and undermines trust.</p>
+      <ul>
+        <li>Only create trips you genuinely intend to take.</li>
+        <li>Update or cancel your trip if your plans change — do not leave accepted members without notice.</li>
+        <li>Do not create fictional trips to collect matches or inflate your profile statistics.</li>
+      </ul>
+
+      <h3>6. Protect Others' Privacy</h3>
+      <ul>
+        <li>Do not share another user's personal information (phone number, address, workplace, social media handles) with third parties without their explicit consent.</li>
+        <li>Do not record voice or video calls without all participants' consent, where required by law.</li>
+        <li>Do not screenshot or share private chat messages publicly.</li>
+      </ul>
+
+      <h3 id="cg-safety">7. Keep It Safe — Before You Meet</h3>
+      <p>We strongly encourage all users to follow these safety practices before meeting anyone for the first time:</p>
+      <ul>
+        <li>Video call before meeting in person.</li>
+        <li>Meet in a public place for your first meeting.</li>
+        <li>Tell a trusted contact where you are going and who you are meeting.</li>
+        <li>Use the in-app live-location sharing feature.</li>
+        <li>Trust your instincts — if something feels wrong, you are never obligated to continue.</li>
+      </ul>
+      <p>Wanderly provides safety tools but cannot guarantee your safety. Your personal judgment and precautions are essential.</p>
+
+      <h3>8. Use the App as Intended</h3>
+      <ul>
+        <li>Do not use Wanderly primarily as a social media platform, networking tool, or marketing channel.</li>
+        <li>Do not solicit investment, donations, or sales from other users.</li>
+        <li>Do not post referral links, affiliate links, or promotional codes without our written permission.</li>
+        <li>Do not attempt to move conversations off-platform in order to circumvent Wanderly's safety features.</li>
+      </ul>
+
+      <h3>9. Reviews Must Be Honest</h3>
+      <ul>
+        <li>Only leave reviews for trips you have genuinely completed with another user.</li>
+        <li>Be honest and fair. Do not leave retaliatory reviews.</li>
+        <li>Do not offer incentives or make requests for positive reviews.</li>
+        <li>False reviews — positive or negative — may be removed and may result in account action.</li>
+      </ul>
+
+      <h3>10. How to Report</h3>
+      <p>If you encounter content or behaviour that violates these Guidelines:</p>
+      <ul>
+        <li>Tap the (⋯) menu on any profile or message and select "Report."</li>
+        <li>Select the most accurate category and provide details.</li>
+        <li>Our Trust &amp; Safety team reviews all reports and responds based on our best effort.</li>
+      </ul>
+      <p>For emergencies, use the SOS feature and contact local emergency services directly. Wanderly's in-app reporting is not a substitute for emergency services.</p>
+
+      <h3 id="cg-consequences">11. Consequences</h3>
+      <p>Violation of these Guidelines may result in:</p>
+      <ul>
+        <li>Content removal without notice.</li>
+        <li>A formal warning and account restriction.</li>
+        <li>Temporary suspension.</li>
+        <li>Permanent ban with no right to re-register.</li>
+        <li>Reporting to law enforcement where required by law or where we believe there is risk of harm.</li>
+      </ul>
+      <p>The severity of the response will reflect the severity of the violation. We do not issue warnings for the most serious violations (sexual exploitation, illegal activity, threats of violence).</p>
+
+      <h3>12. Appeals</h3>
+      <p>If you believe your account was actioned in error, you may submit an appeal at <a href="mailto:support@wanderly.tech">support@wanderly.tech</a> within 14 days of the action. We will review all appeals fairly. Our decision on appeal is final.</p>
+
+      <p style="margin-top:2rem; font-style:italic; color:var(--muted); text-align:center;">Thank you for helping make Wanderly the safest travel community in the world.<br>Questions? Contact us at <a href="mailto:support@wanderly.tech">support@wanderly.tech</a></p>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/#how">How it works</a>
+    <a href="/#safety">Safety</a>
+    <a href="/legal.html" class="active">Legal</a>
+    <a href="mailto:support@wanderly.tech">Contact</a>
+  </div>
+  <p style="color:rgba(250,247,242,0.5); font-size:0.82rem;">
+    <a href="/">wanderly.tech</a> &nbsp;·&nbsp; © 2026 Wanderly. Made with ♥ for travelers.
+  </p>
+</footer>
+
+</body>
+</html>
