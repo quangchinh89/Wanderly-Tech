@@ -112,10 +112,8 @@ h1 em { font-style: italic; color: var(--coral); }
 }
 .btn-link:hover { color: var(--ink); gap: 9px; }
 
-/* HERO VISUAL — CONNECTING THE DOTS */
+/* HERO VISUAL */
 .hero-visual { position: relative; display: flex; align-items: center; justify-content: center; height: 520px; }
-
-/* The three big dots */
 .dot-canvas { position: relative; width: 380px; height: 420px; }
 .hdot {
   position: absolute; border-radius: 50%;
@@ -129,14 +127,10 @@ h1 em { font-style: italic; color: var(--coral); }
 @keyframes hdot-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 .hdot-gold { animation-name: hdot-float-gold; }
 @keyframes hdot-float-gold { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-10px); } }
-
-/* Inner cards for each dot */
 .hdot-inner { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 14px; text-align: center; }
 .hdot-emoji { font-size: 26px; }
 .hdot-label { font-size: 11px; font-weight: 700; color: #fff; line-height: 1.3; }
 .hdot-sub { font-size: 10px; color: rgba(255,255,255,.75); }
-
-/* Connecting lines — SVG overlay */
 .connect-lines {
   position: absolute; inset: 0; pointer-events: none;
   width: 380px; height: 420px;
@@ -147,8 +141,6 @@ h1 em { font-style: italic; color: var(--coral); }
   animation: dash-move 3s linear infinite;
 }
 @keyframes dash-move { to { stroke-dashoffset: -44; } }
-
-/* Match score floating badge */
 .hero-badge {
   position: absolute; background: #fff; border-radius: 16px;
   padding: 12px 16px; box-shadow: 0 8px 32px rgba(31,27,22,.12);
@@ -161,7 +153,7 @@ h1 em { font-style: italic; color: var(--coral); }
 .hb-title { font-size: 12px; font-weight: 700; color: var(--ink); white-space: nowrap; }
 .hb-sub   { font-size: 10px; color: var(--ink-40); }
 
-/* STATS DARK BAR */
+/* STATS */
 .stats-bar { background: var(--ink); padding: 0 48px; }
 .stats-inner {
   max-width: 1200px; margin: 0 auto;
@@ -187,9 +179,7 @@ h1 em { font-style: italic; color: var(--coral); }
   display: flex; flex-direction: column; gap: 8px;
 }
 .cvp-dot-row { display: flex; gap: 5px; margin-bottom: 4px; }
-.cvp-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-}
+.cvp-dot { width: 10px; height: 10px; border-radius: 50%; }
 .cvp-head { font-family: 'DM Serif Display', serif; font-size: 18px; line-height: 1.2; color: var(--ink); }
 .cvp-body { font-size: 13px; color: var(--ink-70); line-height: 1.65; }
 
@@ -219,17 +209,7 @@ h2 em { font-style: italic; color: var(--coral); }
 .step h3 { font-family: 'DM Serif Display', serif; font-size: 21px; margin-bottom: 10px; }
 .step p { font-size: 15px; color: var(--ink-70); line-height: 1.7; }
 
-/* CONNECTING-THE-DOTS VISUAL BETWEEN STEPS */
-.step-connectors {
-  display: grid; grid-template-columns: repeat(3,1fr); gap: 48px;
-  margin: 32px 0 0; align-items: start; pointer-events: none;
-}
-.step-conn-line {
-  height: 2px; background: linear-gradient(90deg, var(--coral), var(--teal));
-  border-radius: 2px; opacity: .25; margin-top: 26px;
-}
-
-/* FEATURE BENTO */
+/* BENTO */
 .bento { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; margin-top: 56px; border-radius: 24px; overflow: hidden; }
 .b-tile { padding: 40px; }
 .b-wide { grid-column: span 2; }
@@ -242,7 +222,6 @@ h2 em { font-style: italic; color: var(--coral); }
 .b-tile p  { font-size: 14px; line-height: 1.7; }
 .b-coral h3, .b-coral p, .b-teal h3, .b-teal p { color: #fff; }
 .b-coral p, .b-teal p { color: rgba(255,255,255,.78); }
-/* Dot motif on cream tiles */
 .b-dots { display: flex; gap: 5px; margin-bottom: 14px; }
 .b-dot { width: 9px; height: 9px; border-radius: 50%; }
 
@@ -271,7 +250,6 @@ h2 em { font-style: italic; color: var(--coral); }
   color: rgba(250,247,242,.65); padding: 5px 13px; border-radius: 100px;
   font-size: 12px; font-weight: 500;
 }
-/* Safety visual */
 .safety-visual {
   background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
   border-radius: 24px; padding: 36px;
@@ -313,13 +291,10 @@ h2 em { font-style: italic; color: var(--coral); }
   background: linear-gradient(140deg, var(--coral) 0%, #be3a27 50%, var(--ink) 100%);
 }
 .cta-orbs { position: absolute; inset: 0; pointer-events: none; }
-.cta-orb {
-  position: absolute; border-radius: 50%; filter: blur(60px); opacity: .18;
-}
+.cta-orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .18; }
 .cta-orb-1 { width: 300px; height: 300px; background: var(--teal); top: -80px; left: 10%; }
 .cta-orb-2 { width: 250px; height: 250px; background: var(--gold); bottom: -60px; right: 10%; }
 .cta-wrap { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
-/* Three dot logo in CTA */
 .cta-logo { display: flex; justify-content: center; margin-bottom: 32px; }
 .cta-logo svg { width: 60px; height: 64px; filter: drop-shadow(0 8px 24px rgba(0,0,0,.3)); }
 .cta-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(32px,4.5vw,52px); color: #fff; max-width: none; margin-bottom: 18px; }
@@ -348,7 +323,7 @@ footer {
 .footer-logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .footer-logo-mark { width: 28px; height: 28px; }
 .footer-word { font-family: 'DM Serif Display', serif; font-size: 20px; color: #fff; }
-.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
 .footer-links a { font-size: 13px; color: rgba(250,247,242,.35); text-decoration: none; transition: color .2s; }
 .footer-links a:hover { color: rgba(250,247,242,.7); }
 .footer-copy { font-size: 12px; color: rgba(250,247,242,.22); }
@@ -436,10 +411,7 @@ footer {
       </div>
     </div>
 
-    <!-- CONNECTING THE DOTS VISUAL -->
     <div class="hero-visual fade-up">
-
-      <!-- Floating info badges -->
       <div class="hero-badge hb-left">
         <div class="hb-row"><div class="hb-icon">🎯</div><div>
           <div class="hb-title">92% match score</div>
@@ -452,17 +424,11 @@ footer {
           <div class="hb-sub">Liveness check passed</div>
         </div></div>
       </div>
-
       <div class="dot-canvas">
-        <!-- Connecting lines SVG -->
         <svg class="connect-lines" viewBox="0 0 380 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Line: coral to teal -->
           <line x1="85" y1="105" x2="295" y2="105" stroke="url(#lg1)" stroke-width="2" class="conn-line"/>
-          <!-- Line: coral to gold -->
           <line x1="85" y1="105" x2="190" y2="310" stroke="url(#lg2)" stroke-width="2" class="conn-line" style="animation-delay:1s"/>
-          <!-- Line: teal to gold -->
           <line x1="295" y1="105" x2="190" y2="310" stroke="url(#lg3)" stroke-width="2" class="conn-line" style="animation-delay:2s"/>
-          <!-- Small connector dots along lines -->
           <circle cx="190" cy="105" r="3" fill="rgba(232,96,76,.4)"/>
           <circle cx="138" cy="208" r="3" fill="rgba(255,181,71,.4)"/>
           <circle cx="243" cy="208" r="3" fill="rgba(15,181,186,.4)"/>
@@ -481,8 +447,6 @@ footer {
             </linearGradient>
           </defs>
         </svg>
-
-        <!-- Coral dot — Traveler A -->
         <div class="hdot hdot-coral">
           <div class="hdot-inner">
             <div class="hdot-emoji">🥾</div>
@@ -490,7 +454,6 @@ footer {
             <div class="hdot-sub">Bali · Mar 12</div>
           </div>
         </div>
-        <!-- Teal dot — Traveler B -->
         <div class="hdot hdot-teal">
           <div class="hdot-inner">
             <div class="hdot-emoji">📸</div>
@@ -498,7 +461,6 @@ footer {
             <div class="hdot-sub">Bali · Mar 10</div>
           </div>
         </div>
-        <!-- Gold dot — Destination -->
         <div class="hdot hdot-gold">
           <div class="hdot-inner">
             <div class="hdot-emoji">🌴</div>
@@ -759,12 +721,14 @@ footer {
     </div>
     <h2 class="fade-up">Three dots. <em>Infinite connections.</em></h2>
     <p class="fade-up">Wanderly is coming soon. Be first to find your travel tribe when we launch — and help shape the app before anyone else gets to.</p>
-        <form class="cta-form fade-up" id="waitlistForm" action="https://formspree.io/f/xojzydwk" method="POST">
-      <input type="email" name="email" class="cta-input" placeholder="Your email address" required>
+    <form class="cta-form fade-up" id="waitlistForm"
+      action="https://docs.google.com/forms/d/e/1FAIpQLSdqCXDeWxv6Ds_8-0YaXXaTuVLkdH_qsAxJyne1o3i9d7pC3Q/formResponse"
+      method="POST" target="hidden_iframe" onsubmit="handleSubmit()">
+      <input type="email" name="entry.8" class="cta-input" placeholder="Your email address" required>
       <button type="submit" class="btn-white" id="joinBtn">Join the waitlist</button>
     </form>
+    <iframe name="hidden_iframe" style="display:none"></iframe>
     <p class="cta-note" id="cta-note">Free during beta &nbsp;·&nbsp; No spam &nbsp;·&nbsp; Unsubscribe anytime</p>
-    <p id="cta-success" style="display:none;color:#fff;font-size:15px;font-weight:600;margin-top:16px;">✓ You're on the list! We'll be in touch soon.</p>
   </div>
 </section>
 
@@ -778,7 +742,11 @@ footer {
     </svg>
     <span class="footer-word">Wanderly</span>
   </a>
-  <div class="footer-links"><a href="https://wanderly.tech/" target="_blank">wanderly.tech</a><a href="mailto:wanderly@wanderly.tech">wanderly@wanderly.tech</a></div>
+  <div class="footer-links">
+    <a href="https://wanderly.tech/" target="_blank">wanderly.tech</a>
+    <a href="mailto:wanderly@wanderly.tech">wanderly@wanderly.tech</a>
+    <a href="/legal.html">Legal Terms</a>
+  </div>
   <p class="footer-copy">© 2026 Wanderly. Made with ♥ for travelers.</p>
 </footer>
 
@@ -793,28 +761,15 @@ footer {
     if (p) p.querySelectorAll('.fade-up').forEach((c,i) => c.style.transitionDelay = `${i*0.09}s`);
   });
 
-  document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const btn = document.getElementById('joinBtn');
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
-    try {
-      const res = await fetch(this.action, {
-        method: 'POST',
-        body: new FormData(this),
-        headers: { 'Accept': 'application/json' }
-      });
-      if (res.ok) {
-        this.style.display = 'none';
-        document.getElementById('cta-note').style.display = 'none';
-        document.getElementById('cta-success').style.display = 'block';
-      } else {
-        btn.textContent = 'Try again';
-        btn.disabled = false;
-      }
-    } catch(err) {
-      btn.textContent = 'Try again';
-      btn.disabled = false;
+  document.getElementById('joinBtn').addEventListener('click', function() {
+    const inp = document.querySelector('.cta-input');
+    if (inp.value && inp.value.includes('@')) {
+      this.textContent = '✓ You\'re on the list!';
+      this.style.background = '#22C55E'; this.style.color = '#fff';
+      inp.disabled = true;
+    } else {
+      inp.style.boxShadow = '0 0 0 3px rgba(255,255,255,0.6)'; inp.focus();
+      setTimeout(() => inp.style.boxShadow = '', 1500);
     }
   });
 </script>
