@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wanderly — Live Location</title>
+
+  <!-- Leaflet (OpenStreetMap, no API key required) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H"
+        crossorigin="anonymous" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH"
+          crossorigin="anonymous"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #FF6B47;
+      --orange-dark: #E04E2C;
+      --teal: #0FB5BA;
+      --cream: #FAF7F2;
+      --text: #1F1B16;
+      --muted: #7A7268;
+      --success: #22C55E;
+      --danger: #EF4444;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ──────────────────────────────── */
+    header {
+      background: #fff;
+      border-bottom: 1px solid #ede8e1;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--orange);
+      letter-spacing: -0.3px;
+    }
+
+    .logo span { color: var(--text); }
+
+    /* ── Info Card ───────────────────────────── */
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin: 16px 16px 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .traveler-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .traveler-name {
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .traveler-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Status badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .badge-active { background: #dcfce7; color: #15803d; }
+    .badge-expired { background: #f3f4f6; color: #6b7280; }
+    .badge-stopped { background: #fee2e2; color: #b91c1c; }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .badge-active .badge-dot { animation: pulse 1.5s ease-in-out infinite; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Meta grid */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .meta-item label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .meta-item value {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* Action buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 11px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.15s;
+      width: 100%;
+    }
+
+    .btn:hover { opacity: 0.88; }
+
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+    }
+
+    /* ── Map ─────────────────────────────────── */
+    #map {
+      flex: 1;
+      min-height: 340px;
+      margin: 12px 16px 16px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    /* ── State overlays ──────────────────────── */
+    .state-overlay {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 48px 24px;
+      flex: 1;
+    }
+
+    .state-icon { font-size: 48px; margin-bottom: 16px; }
+    .state-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .state-body { font-size: 14px; color: var(--muted); line-height: 1.5; max-width: 280px; }
+
+    /* ── Footer ──────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--orange); text-decoration: none; }
+
+    /* ── Refresh indicator ───────────────────── */
+    .refresh-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .refresh-spinner {
+      width: 12px;
+      height: 12px;
+      border: 2px solid #ddd;
+      border-top-color: var(--orange);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+
+    .refreshing .refresh-spinner { display: inline-block; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Hidden utility */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Wander<span>ly</span></div>
+  </header>
+
+  <!-- Loading state -->
+  <div id="state-loading" class="state-overlay">
+    <div class="state-icon">🔍</div>
+    <div class="state-title">Loading location…</div>
+    <div class="state-body">Fetching the latest position from the traveler's device.</div>
+  </div>
+
+  <!-- Not found state -->
+  <div id="state-notfound" class="state-overlay hidden">
+    <div class="state-icon">❓</div>
+    <div class="state-title">Link not found</div>
+    <div class="state-body">This location link doesn't exist or has already been removed.</div>
+  </div>
+
+  <!-- Expired state -->
+  <div id="state-expired" class="state-overlay hidden">
+    <div class="state-icon">⏰</div>
+    <div class="state-title">Location sharing ended</div>
+    <div class="state-body">The traveler's live location sharing session has expired or been stopped.</div>
+  </div>
+
+  <!-- No coords state -->
+  <div id="state-nocoords" class="state-overlay hidden">
+    <div class="state-icon">📡</div>
+    <div class="state-title">Waiting for GPS signal</div>
+    <div class="state-body">The traveler's device hasn't sent a location yet. This page refreshes automatically every 30 seconds.</div>
+  </div>
+
+  <!-- Active state -->
+  <div id="state-active" class="hidden">
+    <div class="card" id="info-card">
+      <div class="traveler-row">
+        <div class="avatar" id="avatar-initials">?</div>
+        <div>
+          <div class="traveler-name" id="traveler-name">—</div>
+          <div class="traveler-sub">is sharing their live location with you</div>
+        </div>
+      </div>
+
+      <div id="badge-active" class="badge badge-active hidden">
+        <span class="badge-dot"></span> Live
+      </div>
+      <div id="badge-expired" class="badge badge-expired hidden">
+        <span class="badge-dot"></span> Sharing ended
+      </div>
+
+      <div class="meta-grid">
+        <div class="meta-item">
+          <label>Last updated</label>
+          <value id="last-updated">—</value>
+        </div>
+        <div class="meta-item">
+          <label>Sharing expires</label>
+          <value id="expires-at">—</value>
+        </div>
+      </div>
+
+      <a id="maps-link" class="btn btn-primary" href="#" target="_blank" rel="noopener">
+        🗺 Open in Google Maps
+      </a>
+
+      <div class="refresh-row" id="refresh-row">
+        <span>Auto-refreshes every 30 s</span>
+        <span class="refresh-spinner" id="spinner"></span>
+      </div>
+    </div>
+
+    <div id="map"></div>
+  </div>
+
+  <footer>
+    Powered by <a href="https://wanderly.tech" target="_blank">Wanderly</a> &mdash; Safe solo travel
+  </footer>
+
+  <script>
+    // ── Config ──────────────────────────────────────────────────────────────────
+    // Update this to match your production API URL (Railway custom domain or default URL).
+    const API_BASE = 'https://api.wanderly.tech';
+    const POLL_INTERVAL_MS = 30_000;
+
+    // ── State ────────────────────────────────────────────────────────────────────
+    let map = null;
+    let marker = null;
+    let pollTimer = null;
+
+    // ── Helpers ──────────────────────────────────────────────────────────────────
+    function getToken() {
+      return new URLSearchParams(window.location.search).get('t');
+    }
+
+    function showOnly(id) {
+      ['state-loading', 'state-notfound', 'state-expired', 'state-nocoords', 'state-active']
+        .forEach(s => document.getElementById(s).classList.toggle('hidden', s !== id));
+    }
+
+    function relativeTime(isoString) {
+      if (!isoString) return '—';
+      const diff = Math.floor((Date.now() - new Date(isoString).getTime()) / 1000);
+      if (diff < 60) return 'Just now';
+      if (diff < 3600) return `${Math.floor(diff / 60)} min ago`;
+      if (diff < 86400) return `${Math.floor(diff / 3600)} hr ago`;
+      return new Date(isoString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function expiresLabel(isoString) {
+      if (!isoString) return '—';
+      const diff = Math.floor((new Date(isoString).getTime() - Date.now()) / 1000);
+      if (diff <= 0) return 'Expired';
+      if (diff < 3600) return `${Math.floor(diff / 60)} min`;
+      return `${Math.floor(diff / 3600)} hr`;
+    }
+
+    function initials(name) {
+      return (name || '?').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    }
+
+    // ── Map ──────────────────────────────────────────────────────────────────────
+    function initMap(lat, lng) {
+      if (map) return;
+      map = L.map('map').setView([lat, lng], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 19,
+      }).addTo(map);
+
+      const icon = L.divIcon({
+        html: '<div style="width:18px;height:18px;background:#FF6B47;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.3)"></div>',
+        className: '',
+        iconSize: [18, 18],
+        iconAnchor: [9, 9],
+      });
+
+      marker = L.marker([lat, lng], { icon }).addTo(map);
+    }
+
+    function updateMapPin(lat, lng) {
+      if (!map) { initMap(lat, lng); return; }
+      marker.setLatLng([lat, lng]);
+      map.panTo([lat, lng]);
+    }
+
+    // ── Render ───────────────────────────────────────────────────────────────────
+    function render(data) {
+      const { senderName, isActive, lat, lng, mapsLink, lastUpdatedAt, expiresAt } = data;
+
+      // Not active and no coords → expired
+      if (!isActive && lat == null) { showOnly('state-expired'); return; }
+
+      // Active but no coords yet → waiting for GPS
+      if (lat == null || lng == null) { showOnly('state-nocoords'); return; }
+
+      showOnly('state-active');
+
+      // Name / avatar
+      document.getElementById('traveler-name').textContent = senderName;
+      document.getElementById('avatar-initials').textContent = initials(senderName);
+
+      // Badge
+      document.getElementById('badge-active').classList.toggle('hidden', !isActive);
+      document.getElementById('badge-expired').classList.toggle('hidden', isActive);
+
+      // Meta
+      document.getElementById('last-updated').textContent = relativeTime(lastUpdatedAt);
+      document.getElementById('expires-at').textContent = isActive ? expiresLabel(expiresAt) : 'Ended';
+
+      // Maps link
+      const link = document.getElementById('maps-link');
+      if (mapsLink) { link.href = mapsLink; link.style.display = ''; }
+      else { link.style.display = 'none'; }
+
+      updateMapPin(lat, lng);
+    }
+
+    // ── Fetch ─────────────────────────────────────────────────────────────────────
+    async function fetchLocation() {
+      const token = getToken();
+      if (!token) { showOnly('state-notfound'); return; }
+
+      document.getElementById('refresh-row')?.classList.add('refreshing');
+
+      try {
+        const res = await fetch(`${API_BASE}/safety/location/data/${encodeURIComponent(token)}`);
+        if (res.status === 404) { showOnly('state-notfound'); clearInterval(pollTimer); return; }
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        render(data);
+        // Stop polling once sharing has ended
+        if (!data.isActive) clearInterval(pollTimer);
+      } catch (err) {
+        console.error('Location fetch failed:', err);
+        // Don't show error on transient failures — keep the last good state visible
+      } finally {
+        document.getElementById('refresh-row')?.classList.remove('refreshing');
+      }
+    }
+
+    // ── Boot ──────────────────────────────────────────────────────────────────────
+    const token = getToken();
+    if (!token) {
+      showOnly('state-notfound');
+    } else {
+      fetchLocation();
+      pollTimer = setInterval(fetchLocation, POLL_INTERVAL_MS);
+      // Keep "last updated" label fresh without re-fetching
+      setInterval(() => {
+        const el = document.getElementById('last-updated');
+        if (el && el.dataset.iso) el.textContent = relativeTime(el.dataset.iso);
+      }, 30_000);
+    }
+  </script>
+</body>
+</html>
