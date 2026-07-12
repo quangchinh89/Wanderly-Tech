@@ -722,12 +722,11 @@ footer {
     <h2 class="fade-up">Three dots. <em>Infinite connections.</em></h2>
     <p class="fade-up">Wanderly is coming soon. Be first to find your travel tribe when we launch — and help shape the app before anyone else gets to.</p>
     <form class="cta-form fade-up" id="waitlistForm"
-      action="https://docs.google.com/forms/d/e/1FAIpQLSdqCXDeWxv6Ds_8-0YaXXaTuVLkdH_qsAxJyne1o3i9d7pC3Q/formResponse"
-      method="POST" target="hidden_iframe" onsubmit="handleSubmit()">
-      <input type="email" name="entry.8" class="cta-input" placeholder="Your email address" required>
+      action="https://formspree.io/f/xojzydwk" method="POST">
+      <input type="email" name="email" class="cta-input" placeholder="Your email address" required>
+      <input type="hidden" name="device" id="deviceField" value="unknown">
       <button type="submit" class="btn-white" id="joinBtn">Join the waitlist</button>
     </form>
-    <iframe name="hidden_iframe" style="display:none"></iframe>
     <p class="cta-note" id="cta-note">Free during beta &nbsp;·&nbsp; No spam &nbsp;·&nbsp; Unsubscribe anytime</p>
   </div>
 </section>
@@ -761,15 +760,41 @@ footer {
     if (p) p.querySelectorAll('.fade-up').forEach((c,i) => c.style.transitionDelay = `${i*0.09}s`);
   });
 
-  document.getElementById('joinBtn').addEventListener('click', function() {
-    const inp = document.querySelector('.cta-input');
-    if (inp.value && inp.value.includes('@')) {
-      this.textContent = '✓ You\'re on the list!';
-      this.style.background = '#22C55E'; this.style.color = '#fff';
-      inp.disabled = true;
-    } else {
-      inp.style.boxShadow = '0 0 0 3px rgba(255,255,255,0.6)'; inp.focus();
-      setTimeout(() => inp.style.boxShadow = '', 1500);
+  // Waitlist form → Formspree, with device type auto-detected from the user agent
+  const detectDevice = () => {
+    const ua = navigator.userAgent;
+    if (/android/i.test(ua)) return 'android';
+    // Modern iPads report as MacIntel but expose multi-touch
+    if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return 'ios';
+    return 'other';
+  };
+  document.getElementById('deviceField').value = detectDevice();
+
+  const waitlistForm = document.getElementById('waitlistForm');
+  const joinBtn = document.getElementById('joinBtn');
+  const ctaNote = document.getElementById('cta-note');
+  const ctaNoteDefault = ctaNote.innerHTML;
+
+  waitlistForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const emailInput = waitlistForm.querySelector('.cta-input');
+    joinBtn.disabled = true;
+    joinBtn.textContent = 'Joining…';
+    try {
+      const res = await fetch(waitlistForm.action, {
+        method: 'POST',
+        body: new FormData(waitlistForm),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!res.ok) throw new Error('Formspree responded ' + res.status);
+      joinBtn.textContent = '✓ You\'re on the list!';
+      joinBtn.style.background = '#22C55E'; joinBtn.style.color = '#fff';
+      emailInput.disabled = true;
+    } catch (err) {
+      joinBtn.disabled = false;
+      joinBtn.textContent = 'Join the waitlist';
+      ctaNote.textContent = 'Something went wrong — please try again in a moment.';
+      setTimeout(() => { ctaNote.innerHTML = ctaNoteDefault; }, 4000);
     }
   });
 </script>
