@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delete your account — Wanderly</title>
+  <meta name="description" content="How to delete your Wanderly account and associated data, in the app or by request — no reinstall required." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --coral:  #E8604C;
+      --teal:   #0FB5BA;
+      --cream:  #FAF7F2;
+      --ink:    #1F1B16;
+      --muted:  #7A7268;
+      --border: #E8E2D9;
+      --card:   #F0EBE3;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.7; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(250,247,242,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--coral); text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--coral); }
+
+    .hero { text-align: center; padding: 5rem 2rem 2rem; max-width: 720px; margin: 0 auto; }
+    .hero-eyebrow { display: inline-block; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral); margin-bottom: 1rem; }
+    .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
+    .hero p { color: var(--muted); font-size: 1rem; max-width: 540px; margin: 0 auto; }
+
+    .page { max-width: 720px; margin: 0 auto; padding: 1rem 2rem 6rem; }
+
+    .cta-card { background: var(--card); border-radius: 16px; border-left: 3px solid var(--coral); padding: 1.75rem; margin: 1.5rem 0 2.5rem; text-align: center; }
+    .cta-card h3 { font-size: 1.05rem; color: var(--ink); margin-bottom: 0.5rem; }
+    .cta-card p { color: var(--muted); font-size: 0.92rem; margin-bottom: 1.25rem; }
+    .cta-btn { display: inline-block; background: var(--coral); color: #fff; text-decoration: none; font-weight: 600; font-size: 0.95rem; padding: 0.85rem 1.75rem; border-radius: 999px; transition: transform 0.15s, background 0.2s; }
+    .cta-btn:hover { background: #d8503d; transform: translateY(-1px); }
+
+    section { margin-bottom: 2.5rem; padding-top: 1.5rem; }
+    section:not(:first-of-type) { border-top: 1px solid var(--border); }
+    .badge { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--coral); margin-bottom: 0.75rem; }
+    .badge::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--coral); }
+    h2 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--ink); margin-bottom: 0.75rem; line-height: 1.2; }
+    p { color: var(--ink); margin-bottom: 0.75rem; font-size: 0.95rem; }
+    ol { margin: 0.5rem 0 1rem 1.25rem; }
+    ol li { font-size: 0.95rem; color: var(--ink); margin-bottom: 0.4rem; padding-left: 0.25rem; }
+    ul { list-style: none; margin: 0.5rem 0 1rem; display: flex; flex-direction: column; gap: 0.4rem; }
+    ul li { font-size: 0.95rem; color: var(--ink); padding-left: 1.25rem; position: relative; }
+    ul li::before { content: '—'; position: absolute; left: 0; color: var(--coral); font-weight: 600; }
+    a.inline { color: var(--coral); text-decoration: none; font-weight: 500; }
+    a.inline:hover { text-decoration: underline; }
+    .note { font-size: 0.88rem; color: var(--muted); background: var(--card); border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0; line-height: 1.65; }
+
+    footer { background: var(--ink); color: var(--cream); text-align: center; padding: 2.5rem 2rem; font-size: 0.875rem; }
+    footer a { color: var(--coral); text-decoration: none; }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .footer-links a { color: rgba(250,247,242,0.6); font-size: 0.85rem; }
+    .footer-links a:hover { color: var(--cream); }
+
+    @media (max-width: 720px) { nav .nav-links { display: none; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">Wanderly</a>
+  <ul class="nav-links">
+    <li><a href="/#how">How it works</a></li>
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/#safety">Safety</a></li>
+    <li><a href="/legal.html">Legal</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <span class="hero-eyebrow">Account &amp; Data</span>
+  <h1>Delete your <em>Wanderly</em> account</h1>
+  <p>You can permanently delete your Wanderly account and its associated data at any time — from inside the app, or by request here if you no longer have the app installed.</p>
+</div>
+
+<div class="page">
+
+  <div class="cta-card">
+    <h3>Request account deletion</h3>
+    <p>No longer have the app? Send us a deletion request and we'll take care of it — no reinstall required.</p>
+    <a class="cta-btn" href="mailto:support@wanderly.tech?subject=Delete%20my%20Wanderly%20account&amp;body=Please%20permanently%20delete%20my%20Wanderly%20account%20and%20associated%20data.%0A%0AThe%20email%20address%20on%20my%20account%3A%20%0A(Optional)%20My%20display%20name%3A%20">Request deletion by email</a>
+  </div>
+
+  <section>
+    <span class="badge">Option 1</span>
+    <h2>Delete in the app</h2>
+    <p>The fastest way — your account is removed right away:</p>
+    <ol>
+      <li>Open <strong>Wanderly</strong> and go to your <strong>Profile</strong> tab.</li>
+      <li>Tap the <strong>Settings</strong> (gear) icon.</li>
+      <li>Scroll to the bottom and tap <strong>Delete account</strong>.</li>
+      <li>Confirm with <strong>“Yes, delete everything.”</strong></li>
+    </ol>
+    <p>Your session ends immediately and deletion begins right away.</p>
+  </section>
+
+  <section>
+    <span class="badge">Option 2</span>
+    <h2>Request deletion without the app</h2>
+    <p>If you've uninstalled Wanderly or can't sign in, email us and we'll process your deletion manually:</p>
+    <ul>
+      <li>Write to <a class="inline" href="mailto:support@wanderly.tech?subject=Delete%20my%20Wanderly%20account">support@wanderly.tech</a> from the email address on your account, with the subject <strong>“Delete my Wanderly account.”</strong></li>
+      <li>We verify ownership of the account before deleting, then confirm by email once it's done.</li>
+      <li>Requests are actioned within <strong>30 days</strong> (usually much sooner).</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="badge">What happens</span>
+    <h2>What we delete</h2>
+    <p>When your account is deleted, we permanently remove your personal data and the content you created, including:</p>
+    <ul>
+      <li>Your profile — name, bio, photos, gender, home country, date of birth, languages and interests</li>
+      <li>Your identity-verification data (verification photos and status)</li>
+      <li>Content you authored — trip recaps and their photos, reviews you wrote, and photos on trips you host</li>
+      <li>Emergency contacts you saved and any active live-location share</li>
+      <li>Your login identity, so the account can never be signed into again</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="badge">Retention</span>
+    <h2>What we may keep, and why</h2>
+    <p>To protect other travelers and meet our legal obligations, a limited set of records is retained in <strong>anonymized</strong> form (stripped of information that identifies you):</p>
+    <ul>
+      <li>Records other users still depend on — such as reviews written about trips and group-trip history — kept without your name or profile</li>
+      <li>Data required for safety, fraud-prevention, and abuse-moderation purposes</li>
+      <li>Information we're legally required to retain under applicable law</li>
+    </ul>
+    <div class="note">
+      Anonymized records contain no personal identifiers and cannot be linked back to you. For full details, see our <a class="inline" href="/legal.html">Privacy Policy</a>.
+    </div>
+  </section>
+
+  <section>
+    <span class="badge">Questions</span>
+    <h2>Need help?</h2>
+    <p>Contact us any time at <a class="inline" href="mailto:support@wanderly.tech">support@wanderly.tech</a> — we're happy to help with account or data questions.</p>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/#how">How it works</a>
+    <a href="/#safety">Safety</a>
+    <a href="/legal.html">Legal</a>
+    <a href="mailto:support@wanderly.tech">Contact</a>
+  </div>
+  <p style="color:rgba(250,247,242,0.5); font-size:0.82rem;">
+    <a href="/">wanderly.tech</a> &nbsp;·&nbsp; © 2026 Wanderly - Chill with Nomads.
+  </p>
+</footer>
+
+</body>
+</html>
