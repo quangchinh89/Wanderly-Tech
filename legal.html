@@ -240,14 +240,14 @@
     <section class="doc-section" id="privacy">
       <span class="doc-badge">Document 2 of 3</span>
       <h2>Privacy Policy</h2>
-      <p class="doc-updated">Last updated: 18 June 2026 &nbsp;·&nbsp; Effective: 18 June 2026</p>
+      <p class="doc-updated">Last updated: 5 August 2026 &nbsp;·&nbsp; Effective: 18 June 2026</p>
       <p class="doc-intro">Wanderly ("we," "us," "our") is committed to protecting your personal information. This Privacy Policy explains what data we collect, why we collect it, how we use and protect it, and your rights regarding your data. By using the App you agree to the collection and use of your data as described here.</p>
 
       <h3 id="priv-collect">1. Data We Collect</h3>
       <h4>Data You Provide</h4>
       <ul>
         <li>Account information: name, email address, date of birth, gender, home country, profile photo.</li>
-        <li>Identity verification data: government ID image, selfie/liveness scan (processed by our third-party provider; raw ID images deleted within 30 days).</li>
+        <li>Identity verification / face data: a reference face photo and a live selfie, compared via Amazon Web Services (AWS) Rekognition to confirm you are a real, live person. The live selfie is discarded immediately after comparison; the reference photo is erased when you delete your account. See Section 5.</li>
         <li>Profile content: bio, travel interests, travel style, languages, past trips, uploaded photos.</li>
         <li>Trip data: destinations, dates, itineraries, group size preferences.</li>
         <li>Communications: messages sent and received through the in-app chat.</li>
@@ -264,7 +264,7 @@
       <h4>Data from Third Parties</h4>
       <ul>
         <li>Social login providers (Google, Facebook): profile name, email, profile picture — only what you authorize.</li>
-        <li>Identity verification providers: pass/fail result and a verification reference ID (not the raw ID document).</li>
+        <li>Identity verification (AWS Rekognition): the pass/fail face-comparison result and a similarity score (not a reusable faceprint or template).</li>
       </ul>
 
       <h3 id="priv-use">2. How We Use Your Data</h3>
@@ -293,14 +293,15 @@
       <p><strong>We do not sell your personal data.</strong> We share data only:</p>
       <ul>
         <li>With other users: your public profile information, trip details, and reviews are visible to other Wanderly users as intended by the App's functionality.</li>
-        <li>With service providers: identity verification, cloud hosting, analytics, push notification, and customer support providers — each bound by data processing agreements.</li>
+        <li>With service providers: identity verification and face-comparison (Amazon Web Services — AWS Rekognition &amp; S3), cloud hosting, analytics, push notification, and customer support providers — each bound by data processing agreements.</li>
         <li>With trusted contacts: location data and SOS alerts, only when you activate these features.</li>
         <li>For legal reasons: if required by law, court order, or to protect the rights, safety, or property of Wanderly or others.</li>
         <li>In a business transfer: if Wanderly is involved in a merger, acquisition, or sale of assets, your data may be transferred. We will notify you before your data is subject to a different privacy policy.</li>
       </ul>
 
-      <h3>5. Identity Verification Data</h3>
-      <p>Government ID images submitted for verification are processed exclusively by our third-party verification provider. Wanderly stores only the verification status (verified/unverified) and a reference token. Raw ID images are deleted within 30 days of submission. Selfie/liveness data is used solely for verification and is not used for facial recognition or marketing.</p>
+      <h3 id="priv-verification">5. Identity Verification &amp; Face Data</h3>
+      <p>To confirm you are a real, live person, Wanderly's optional identity verification collects a reference face photo and a live selfie. These images are compared one-to-one using Amazon Web Services (AWS) Rekognition solely to confirm that the selfie matches the reference photo and is a live capture. This is facial-comparison technology used only for identity verification. We do not create or store any faceprint, face template, or searchable face identifier, and we do not use face data for advertising, tracking, profiling, or any purpose other than verification.</p>
+      <p>The reference photo is stored in a private, encrypted AWS S3 bucket and is shared only with AWS as our sub-processor under a data processing agreement — never sold or shared with any other third party. The live selfie is discarded immediately after the comparison and is never stored. The reference photo and the pass/fail verification result are retained only while your account is active and are permanently deleted when you delete your account.</p>
 
       <h3>6. Location Data</h3>
       <p>We collect city-level approximate location to power match recommendations and trip discovery. We collect precise GPS location only when you explicitly activate live-location sharing or trigger an SOS event. You can disable location access at any time via your device settings, though this may limit match accuracy.</p>
@@ -310,7 +311,7 @@
         <li>Active account data: retained for as long as your account is active.</li>
         <li>Deleted account data: most data deleted within 30 days of account deletion. Some data may be retained longer to comply with legal obligations, resolve disputes, or prevent fraud.</li>
         <li>Chat messages: retained for 90 days after a trip ends, then deleted.</li>
-        <li>Government ID images: deleted within 30 days of submission (handled by verification provider).</li>
+        <li>Verification reference photo &amp; result: retained while your account is active; the reference photo is erased from storage and the verification records are deleted when you delete your account. The live selfie is never stored.</li>
         <li>Anonymised analytics data: may be retained indefinitely.</li>
       </ul>
 
