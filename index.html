@@ -112,6 +112,17 @@ h1 em { font-style: italic; color: var(--coral); }
 }
 .btn-link:hover { color: var(--ink); gap: 9px; }
 
+/* STORE BADGES */
+.store-badges { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.store-badge { display: inline-flex; border-radius: 10px; transition: transform .2s, box-shadow .2s; }
+.store-badge:hover { transform: translateY(-2px); }
+.store-badge img { height: 46px; width: auto; display: block; }
+.download-card {
+  display: inline-flex; background: rgba(255,255,255,.97);
+  padding: 18px 22px; border-radius: 22px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.32);
+}
+
 /* HERO VISUAL */
 .hero-visual { position: relative; display: flex; align-items: center; justify-content: center; height: 520px; }
 .dot-canvas { position: relative; width: 380px; height: 420px; }
@@ -299,21 +310,7 @@ h2 em { font-style: italic; color: var(--coral); }
 .cta-logo svg { width: 60px; height: 64px; filter: drop-shadow(0 8px 24px rgba(0,0,0,.3)); }
 .cta-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(32px,4.5vw,52px); color: #fff; max-width: none; margin-bottom: 18px; }
 .cta-section p  { font-size: 17px; color: rgba(255,255,255,.72); line-height: 1.75; margin-bottom: 36px; }
-.cta-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-.cta-input {
-  padding: 16px 24px; border-radius: 100px; border: none; outline: none;
-  font-family: 'DM Sans', sans-serif; font-size: 15px;
-  width: 280px; background: rgba(255,255,255,.94); color: var(--ink);
-}
-.cta-input::placeholder { color: var(--ink-40); }
-.btn-white {
-  background: #fff; color: var(--coral);
-  padding: 16px 30px; border-radius: 100px; border: none;
-  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 700;
-  cursor: pointer; transition: transform .2s, box-shadow .2s; white-space: nowrap;
-}
-.btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
-.cta-note { font-size: 12px; color: rgba(255,255,255,.38); margin-top: 14px; }
+.cta-note { font-size: 12px; color: rgba(255,255,255,.38); margin-top: 18px; }
 
 /* FOOTER */
 footer {
@@ -356,6 +353,9 @@ footer {
   .safety-wrap { grid-template-columns: 1fr; gap: 48px; }
   .for-grid { grid-template-columns: 1fr; }
   .cta-section { padding: 80px 24px; }
+  .store-badges { justify-content: center; }
+  .store-badge img { height: 42px; }
+  .download-card { padding: 14px 16px; }
   footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
 }
 </style>
@@ -376,7 +376,7 @@ footer {
     <a href="#how">How it works</a>
     <a href="#features">Features</a>
     <a href="#safety">Safety</a>
-    <a href="#join" class="nav-pill">Get early access</a>
+    <a href="#join" class="nav-pill">Download</a>
   </div>
 </nav>
 
@@ -395,15 +395,19 @@ footer {
           <div class="beta-dot bd-2"></div>
           <div class="beta-dot bd-3"></div>
         </div>
-        Beta coming soon
+        Now on iOS &amp; Android
       </div>
       <h1 class="fade-up">Find your<br><em>travel tribe</em></h1>
       <p class="hero-sub fade-up">Match by trip, not just profile. Connect with verified travel companions heading the same way — from a single dinner to a three-week adventure. Your terms, always.</p>
       <div class="hero-ctas fade-up">
-        <a href="#join" class="btn-primary">
-          Get early access
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+        <div class="store-badges">
+          <a href="https://apps.apple.com/us/app/wanderly-find-travel-tribe/id6788781777" target="_blank" rel="noopener" class="store-badge" aria-label="Download Wanderly on the App Store">
+            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" loading="lazy" width="138" height="46">
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=tech.wanderly.app" target="_blank" rel="noopener" class="store-badge" aria-label="Get Wanderly on Google Play">
+            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_us_badge_web_generic.png" alt="Get it on Google Play" loading="lazy" height="46">
+          </a>
+        </div>
         <a href="#how" class="btn-link">
           See how it works
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -569,7 +573,7 @@ footer {
         <div class="b-dots"><div class="b-dot" style="background:rgba(255,255,255,.5)"></div><div class="b-dot" style="background:rgba(255,255,255,.3)"></div><div class="b-dot" style="background:rgba(255,255,255,.2)"></div></div>
         <div class="b-icon">🌍</div>
         <h3>Find your tribe</h3>
-        <p>Launching across Southeast Asia's top travel destinations. The right companion for your next trip is already out there.</p>
+        <p>Now live across Southeast Asia's top travel destinations. The right companion for your next trip is already out there.</p>
       </div>
       <div class="b-tile b-cream fade-up">
         <div class="b-dots"><div class="b-dot" style="background:var(--teal)"></div><div class="b-dot" style="background:var(--coral)"></div><div class="b-dot" style="background:var(--gold)"></div></div>
@@ -720,14 +724,18 @@ footer {
       </svg>
     </div>
     <h2 class="fade-up">Three dots. <em>Infinite connections.</em></h2>
-    <p class="fade-up">Wanderly is coming soon. Be first to find your travel tribe when we launch — and help shape the app before anyone else gets to.</p>
-    <form class="cta-form fade-up" id="waitlistForm"
-      action="https://formspree.io/f/xojzydwk" method="POST">
-      <input type="email" name="email" class="cta-input" placeholder="Your email address" required>
-      <input type="hidden" name="device" id="deviceField" value="unknown">
-      <button type="submit" class="btn-white" id="joinBtn">Join the waitlist</button>
-    </form>
-    <p class="cta-note" id="cta-note">Free during beta &nbsp;·&nbsp; No spam &nbsp;·&nbsp; Unsubscribe anytime</p>
+    <p class="fade-up">Wanderly is live on iOS and Android. Download the app and find your travel tribe for your next trip.</p>
+    <div class="download-card fade-up">
+      <div class="store-badges">
+        <a href="https://apps.apple.com/us/app/wanderly-find-travel-tribe/id6788781777" target="_blank" rel="noopener" class="store-badge" aria-label="Download Wanderly on the App Store">
+          <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" loading="lazy" width="138" height="46">
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=tech.wanderly.app" target="_blank" rel="noopener" class="store-badge" aria-label="Get Wanderly on Google Play">
+          <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_us_badge_web_generic.png" alt="Get it on Google Play" loading="lazy" height="46">
+        </a>
+      </div>
+    </div>
+    <p class="cta-note">Free to download &nbsp;·&nbsp; Verified community &nbsp;·&nbsp; iOS &amp; Android</p>
   </div>
 </section>
 
@@ -758,44 +766,6 @@ footer {
   ['.steps','.bento','.cvp-inner','.safety-list','.for-grid','.stats-inner'].forEach(sel => {
     const p = document.querySelector(sel);
     if (p) p.querySelectorAll('.fade-up').forEach((c,i) => c.style.transitionDelay = `${i*0.09}s`);
-  });
-
-  // Waitlist form → Formspree, with device type auto-detected from the user agent
-  const detectDevice = () => {
-    const ua = navigator.userAgent;
-    if (/android/i.test(ua)) return 'android';
-    // Modern iPads report as MacIntel but expose multi-touch
-    if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return 'ios';
-    return 'other';
-  };
-  document.getElementById('deviceField').value = detectDevice();
-
-  const waitlistForm = document.getElementById('waitlistForm');
-  const joinBtn = document.getElementById('joinBtn');
-  const ctaNote = document.getElementById('cta-note');
-  const ctaNoteDefault = ctaNote.innerHTML;
-
-  waitlistForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const emailInput = waitlistForm.querySelector('.cta-input');
-    joinBtn.disabled = true;
-    joinBtn.textContent = 'Joining…';
-    try {
-      const res = await fetch(waitlistForm.action, {
-        method: 'POST',
-        body: new FormData(waitlistForm),
-        headers: { 'Accept': 'application/json' }
-      });
-      if (!res.ok) throw new Error('Formspree responded ' + res.status);
-      joinBtn.textContent = '✓ You\'re on the list!';
-      joinBtn.style.background = '#22C55E'; joinBtn.style.color = '#fff';
-      emailInput.disabled = true;
-    } catch (err) {
-      joinBtn.disabled = false;
-      joinBtn.textContent = 'Join the waitlist';
-      ctaNote.textContent = 'Something went wrong — please try again in a moment.';
-      setTimeout(() => { ctaNote.innerHTML = ctaNoteDefault; }, 4000);
-    }
   });
 </script>
 </body>
