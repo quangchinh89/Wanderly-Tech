@@ -361,6 +361,24 @@ footer {
   footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
 }
 </style>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1328626315911294');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1328626315911294&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -769,6 +787,33 @@ footer {
     const p = document.querySelector(sel);
     if (p) p.querySelectorAll('.fade-up').forEach((c,i) => c.style.transitionDelay = `${i*0.09}s`);
   });
+
+  /* ── Meta Pixel: engagement + store-click events ────────────────
+     ViewContent  = visitor scrolled past the hero into "How it works"
+                    (i.e. they actually read the page, not just landed)
+     StoreClick   = visitor tapped an App Store / Google Play badge     */
+  (function () {
+    if (typeof fbq !== 'function') return;
+
+    const how = document.querySelector('#how');
+    if (how) {
+      const readObserver = new IntersectionObserver((entries, obs) => {
+        if (!entries.some(e => e.isIntersecting)) return;
+        fbq('track', 'ViewContent', { content_name: 'how-it-works' });
+        obs.disconnect();
+      }, { threshold: 0.25 });
+      readObserver.observe(how);
+    }
+
+    document.querySelectorAll('.store-badge').forEach(badge => {
+      badge.addEventListener('click', () => {
+        fbq('trackCustom', 'StoreClick', {
+          platform: badge.classList.contains('badge-apple') ? 'ios' : 'android',
+          location: badge.closest('.hero-ctas') ? 'hero' : 'footer_cta',
+        });
+      });
+    });
+  })();
 </script>
 </body>
 </html>
